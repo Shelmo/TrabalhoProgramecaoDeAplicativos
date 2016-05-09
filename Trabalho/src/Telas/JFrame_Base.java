@@ -21,6 +21,8 @@ public abstract class JFrame_Base extends javax.swing.JFrame
     private JPanel jPanel_CENTER;
     private JPanel jPanel_SOUTH_CENTER;
     private JPanel jPanel_SOUTH_EAST;
+    private JPanel jPanel_NORTH_CENTER;
+    private JPanel jPanel_NORTH_WEST;
     private JLabel jLabel_Titulo;
     private JLabel jLabel_Aviso;
     private JLabel jLabel_Background;
@@ -54,19 +56,26 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         jPanel_CENTER = new JPanel();
         jPanel_SOUTH_CENTER = new JPanel();
         jPanel_SOUTH_EAST = new JPanel();
+        jPanel_NORTH_CENTER = new JPanel();
+        jPanel_NORTH_WEST = new JPanel();
         jPanel_CENTER.setOpaque(false);
         jPanel_SOUTH.setOpaque(false);
         jPanel_NORTH.setOpaque(false);
         jPanel_SOUTH_CENTER.setOpaque(false);
         jPanel_SOUTH_EAST.setOpaque(false);
+        jPanel_NORTH_CENTER.setOpaque(false);
+        jPanel_NORTH_WEST.setOpaque(false);
 
         
         
         jPanel_SOUTH_CENTER.setLayout(new FlowLayout(FlowLayout.CENTER));
         jPanel_SOUTH_EAST.setLayout(new FlowLayout(FlowLayout.RIGHT));
         
+        jPanel_NORTH_CENTER.setLayout(new FlowLayout(FlowLayout.CENTER));
+        jPanel_NORTH_WEST.setLayout(new FlowLayout(FlowLayout.LEFT));
+        
         jPanel_SOUTH.setLayout(new BorderLayout());
-        jPanel_NORTH.setLayout(new FlowLayout(FlowLayout.CENTER));
+        jPanel_NORTH.setLayout(new BorderLayout());
         jPanel_CENTER.setLayout(layout);
 
         
@@ -94,7 +103,9 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         jPanel_SOUTH_EAST.add(jButton_Voltar);
         jPanel_SOUTH.add(BorderLayout.NORTH, jPanel_SOUTH_CENTER);
         jPanel_SOUTH.add(BorderLayout.SOUTH, jPanel_SOUTH_EAST);
-        jPanel_NORTH.add(jLabel_Titulo);
+        jPanel_NORTH_CENTER.add(jLabel_Titulo);
+        jPanel_NORTH.add(BorderLayout.NORTH, jPanel_NORTH_WEST);
+        jPanel_NORTH.add(BorderLayout.SOUTH, jPanel_NORTH_CENTER);
         jLabel_Background.setLayout(new BorderLayout());
         jLabel_Background.add(BorderLayout.SOUTH, jPanel_SOUTH);
         jLabel_Background.add(BorderLayout.NORTH, jPanel_NORTH);
@@ -115,11 +126,16 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         return jPanel_CENTER;
     }
 
-    public JPanel getjPanel_NORTH()
+    public JPanel getjPanel_NORTH_CENTER()
     {
-        return jPanel_NORTH;
+        return jPanel_NORTH_CENTER;
     }
 
+    public JPanel getjPanel_NORTH_WEST()
+    {
+        return jPanel_NORTH_WEST;
+    }
+    
     public JLabel getjLabel_Titulo()
     {
         return jLabel_Titulo;

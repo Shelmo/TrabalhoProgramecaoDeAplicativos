@@ -14,7 +14,7 @@ public class JFrame_LocalizarProduto extends JFrame_BaseLocalizar
     
     public JFrame_LocalizarProduto(int select)
     {
-        super("");
+        super("src\\Imagens\\TelaProduto.jpg");
         this.select = select;
         
         getjCheckBox1().setText("Localizar por Categoria");
@@ -23,18 +23,13 @@ public class JFrame_LocalizarProduto extends JFrame_BaseLocalizar
     }
 
     @Override
-    public void AcaoJCheckBox1()
-    {
-    }
+    public void AcaoJCheckBox1(){/*Nenhuma ação necessária*/}
 
     @Override
-    public void AcaoJCheckBox2()
-    {
-        
-    }
+    public void AcaoJCheckBox2(){/*Nenhuma ação necessária*/}
 
     @Override
-    public void AcaoJCheckBox3(){/*JcheckBox não utilizado*/}
+    public void AcaoJCheckBox3(){/*JCheckBox não utilizado*/}
 
     @Override
     public void Confirmar()

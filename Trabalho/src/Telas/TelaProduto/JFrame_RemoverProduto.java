@@ -14,7 +14,7 @@ public class JFrame_RemoverProduto extends JFrame_Produto
     private final int select;
     public JFrame_RemoverProduto(int select, Produto produto)
     {
-        super(null);
+        super();
         this.produto = produto;
         this.select = select;
         

@@ -18,7 +18,7 @@ public class JFrame_AlterarCliente extends JFrame_Cliente
     
     public JFrame_AlterarCliente(int select, Cliente cliente)
     {
-        super(null);
+        super();
         this.cliente = cliente;
         this.select = select;
         

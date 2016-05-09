@@ -7,7 +7,6 @@ import Telas.TelaCategoria.JFrame_LocalizarCategoria;
 import Telas.TelaCategoria.JFrame_NovaCategoria;
 import Telas.TelaCategoria.JFrame_RemoverCategoria;
 import Telas.TelaCliente.JFrame_AlterarCliente;
-import Telas.TelaCliente.JFrame_Cliente;
 import Telas.TelaCliente.JFrame_LocalizarCliente;
 import Telas.TelaCliente.JFrame_NovoCliente;
 import Telas.TelaCliente.JFrame_RemoverCliente;
@@ -17,9 +16,13 @@ import Telas.TelaProduto.JFrame_NovoProduto;
 import Telas.TelaProduto.JFrame_RemoverProduto;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
@@ -50,9 +53,23 @@ public class JFrame_Principal extends JFrame_Base
     
     private MontarTabelas tabela;
     
+    private JMenuBar jMenuBar;
+    
+    private JMenu jMenu_Categoria;
+    private JMenu jMenu_Produto;
+    private JMenu jMenu_Cliente;
+    private JMenu jMenu_Sobre;
+    
+    private JMenuItem jMenuItem_NovaCategoria;
+    private JMenuItem jMenuItem_LocalizarCategoria;
+    private JMenuItem jMenuItem_NovoProduto;
+    private JMenuItem jMenuItem_LocalizarProduto;
+    private JMenuItem jMenuItem_NovoCliente;
+    private JMenuItem jMenuItem_LocalizarCliente;
+    
     public JFrame_Principal()
     {
-        super("");
+        super("src\\Imagens\\TelaPrincipal.jpg");
         Componentes();
         setExtendedState(MAXIMIZED_BOTH);
     }
@@ -68,6 +85,18 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
         jButton_Update = new JButton();
+        
+        jMenuBar = new JMenuBar();
+        jMenu_Categoria = new JMenu();
+        jMenu_Cliente = new JMenu();
+        jMenu_Produto = new JMenu();
+        jMenu_Sobre = new JMenu();
+        jMenuItem_LocalizarCategoria = new JMenuItem();
+        jMenuItem_LocalizarCliente = new JMenuItem();
+        jMenuItem_LocalizarProduto = new JMenuItem();
+        jMenuItem_NovaCategoria = new JMenuItem();
+        jMenuItem_NovoCliente = new JMenuItem();
+        jMenuItem_NovoProduto = new JMenuItem();
         
         tabela = new MontarTabelas();
         
@@ -92,15 +121,40 @@ public class JFrame_Principal extends JFrame_Base
         icone = new ImageIcon("src\\Imagens\\update.png");
         jButton_Update.setIcon(icone);
         
+        //Texto e formatações
+        jMenu_Categoria.setText("Categorias");
+        jMenu_Produto.setText("Produtos");
+        jMenu_Cliente.setText("Clientes");
+        jMenu_Sobre.setText("Sobre");
+        jMenuItem_NovaCategoria.setText("Nova Categoria");
+        jMenuItem_LocalizarCategoria.setText("Localizar Categoria");
+        jMenuItem_NovoProduto.setText("Novo Produto");
+        jMenuItem_LocalizarProduto.setText("Localizar Produto");
+        jMenuItem_NovoCliente.setText("Novo Cliente");
+        jMenuItem_LocalizarCliente.setText("Localizar Cliente");
+        
+        jMenu_Categoria.add(jMenuItem_NovaCategoria);
+        jMenu_Categoria.add(jMenuItem_LocalizarCategoria);
+        jMenu_Produto.add(jMenuItem_NovoProduto);
+        jMenu_Produto.add(jMenuItem_LocalizarProduto);
+        jMenu_Cliente.add(jMenuItem_NovoCliente);
+        jMenu_Cliente.add(jMenuItem_LocalizarCliente);
+        
+        jMenuBar.add(jMenu_Categoria);
+        jMenuBar.add(jMenu_Produto);
+        jMenuBar.add(jMenu_Cliente);
+        jMenuBar.add(jMenu_Sobre);
+        
         //Componentes não mostrados
         getjLabel_Titulo().setVisible(false);
         getjButton_Confirmar().setVisible(false);
         VisibilidadeBotoes(false);
         
         //Painel Norte
-        getjPanel_NORTH().add(jButton_Categoria);
-        getjPanel_NORTH().add(jButton_Produto);
-        getjPanel_NORTH().add(jButton_Cliente);
+        getjPanel_NORTH_WEST().add(jMenuBar);
+        getjPanel_NORTH_CENTER().add(jButton_Categoria);
+        getjPanel_NORTH_CENTER().add(jButton_Produto);
+        getjPanel_NORTH_CENTER().add(jButton_Cliente);
         
         //Painel Central
         getGBC().fill = GridBagConstraints.NONE;
@@ -131,7 +185,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                MontarJPanelCentral(CATEGORIA);
+                TrocaTela(CATEGORIA);
             }
         });
         
@@ -141,7 +195,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                MontarJPanelCentral(PRODUTO);
+                TrocaTela(PRODUTO);
             }
         });
         
@@ -151,7 +205,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                MontarJPanelCentral(CLIENTE);
+                TrocaTela(CLIENTE);
             }
         });
         
@@ -242,6 +296,104 @@ public class JFrame_Principal extends JFrame_Base
                 }
             }
         });
+        
+        //MenuBar
+        //MenuSobre
+        jMenu_Sobre.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                JOptionPane.showMessageDialog(getjPanel_CENTER(), "Teabalho de Programação de Aplicativos\n"
+                        + "Acadêmico: Shelmo Lucas Baches", "Sobre", 3);
+            }
+        });
+        //MenuCategoria
+        jMenu_Categoria.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                TrocaTela(CATEGORIA);
+            }
+        });
+        jMenuItem_NovaCategoria.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                new JFrame_NovaCategoria();
+            }
+        });
+        jMenuItem_LocalizarCategoria.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                Localizar(CATEGORIA);
+            }
+        });
+        
+        //MenuProduto
+        jMenu_Produto.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                TrocaTela(PRODUTO);
+            }
+        });
+        jMenuItem_NovoProduto.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                new JFrame_NovoProduto();
+            }
+        });
+        jMenuItem_LocalizarProduto.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                Localizar(PRODUTO);
+            }
+        });
+        //MenuCliente
+        jMenu_Cliente.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                TrocaTela(CLIENTE);
+            }
+        });
+        jMenuItem_NovoCliente.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                new JFrame_NovoCliente();
+            }
+        });
+        jMenuItem_LocalizarCliente.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                Localizar(CLIENTE);
+            }
+        });
+    }
+    
+    private void TrocaTela(int constante)
+    {
+        if(constante == CATEGORIA)
+            MontarJPanelCentral(CATEGORIA);
+        if(constante == PRODUTO)
+            MontarJPanelCentral(PRODUTO);
+        if(constante == CLIENTE)
+            MontarJPanelCentral(CLIENTE);
     }
     
     private int SelecionarTabela(boolean mostrar)

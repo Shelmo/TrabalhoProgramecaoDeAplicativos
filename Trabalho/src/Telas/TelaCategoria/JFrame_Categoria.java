@@ -16,9 +16,9 @@ public abstract class JFrame_Categoria extends JFrame_Base
     private JLabel jLabel_ErroNome;
     private JTextField jTextField_Nome;
     
-    public JFrame_Categoria(String image)
+    public JFrame_Categoria()
     {
-        super(image);
+        super("src\\Imagens\\TelaCategoria.jpg");
         Componentes();
     }
     

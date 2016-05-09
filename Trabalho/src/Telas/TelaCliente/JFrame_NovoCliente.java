@@ -15,7 +15,7 @@ public class JFrame_NovoCliente extends JFrame_Cliente
 {
     public JFrame_NovoCliente()
     {
-        super(null);
+        super();
         getjLabel_Titulo().setText("Novo Cliente");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");

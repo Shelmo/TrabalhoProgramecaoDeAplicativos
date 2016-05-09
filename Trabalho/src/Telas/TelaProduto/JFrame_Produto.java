@@ -31,9 +31,9 @@ public abstract class JFrame_Produto extends JFrame_Base
     
     private JTextArea jTextArea_Descricao;
     
-    public JFrame_Produto(String image)
+    public JFrame_Produto()
     {
-        super(image);
+        super("src\\Imagens\\TelaProduto.jpg");
         Componentes();
     }
     

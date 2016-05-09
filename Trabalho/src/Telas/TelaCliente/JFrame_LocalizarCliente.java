@@ -13,8 +13,10 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
     private final int select;
     public JFrame_LocalizarCliente(int select)
     {
-        super(null);
+        super("src\\Imagens\\TelaCliente.jpg");
         this.select = select;
+        
+        
         
         getjCheckBox1().setText("Localizar por Nome");
         getjCheckBox2().setText("Localizar por CPF");
@@ -47,7 +49,15 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
             if(getjCheckBox1().isSelected())
                 coluna = 0;
             if(getjCheckBox2().isSelected())
+            {
+                if(getjFormattedTextField_Localizar().getText().equals("___.___.___-__"))
+                {
+                    getjLabel_ErroLocalizar().setText("O campo Localizar é obrigatório!");
+                    return;
+                }
+                
                 coluna = 1;
+            }
 
             if(MontarTabelas.SelecionarLinhaTabela(select, coluna, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
                 dispose();

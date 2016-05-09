@@ -14,7 +14,7 @@ public class JFrame_LocalizarCategoria extends JFrame_BaseLocalizar
     
     public JFrame_LocalizarCategoria(int select)
     {
-        super("");
+        super("src\\Imagens\\TelaCategoria.jpg");
         this.select = select;
         getjCheckBox1().setVisible(false);
         getjCheckBox2().setVisible(false);

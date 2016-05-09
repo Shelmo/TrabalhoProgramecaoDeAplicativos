@@ -15,7 +15,7 @@ public class JFrame_AlterarCategoria extends JFrame_Categoria
     
     public JFrame_AlterarCategoria(int select, Categoria categoria)
     {
-        super("");
+        super();
         this.categoria = categoria;
         this.select = select;
         

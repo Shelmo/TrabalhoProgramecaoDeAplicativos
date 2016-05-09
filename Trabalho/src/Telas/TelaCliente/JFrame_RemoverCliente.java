@@ -16,7 +16,7 @@ public class JFrame_RemoverCliente extends JFrame_Cliente
     
     public JFrame_RemoverCliente(int select, Cliente cliente)
     {
-        super(null);
+        super();
         this.cliente = cliente;
         this.select = select;
         

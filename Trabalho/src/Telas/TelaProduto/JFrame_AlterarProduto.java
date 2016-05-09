@@ -16,7 +16,7 @@ public class JFrame_AlterarProduto extends JFrame_Produto
     
     public JFrame_AlterarProduto(int select, Produto produto)
     {
-        super(null);
+        super();
         this.produto = produto;
         this.select = select;
         

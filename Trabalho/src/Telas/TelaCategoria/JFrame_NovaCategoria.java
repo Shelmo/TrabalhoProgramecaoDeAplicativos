@@ -12,7 +12,7 @@ public class JFrame_NovaCategoria extends JFrame_Categoria
 {
     public JFrame_NovaCategoria()
     {
-        super("");
+        super();
         getjLabel_Titulo().setText("Nova Categoria");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");

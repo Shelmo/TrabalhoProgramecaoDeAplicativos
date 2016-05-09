@@ -15,7 +15,7 @@ public class JFrame_RemoverCategoria extends JFrame_Categoria
     
     public JFrame_RemoverCategoria(int select, Categoria categoria)
     {
-        super("");
+        super();
         this.categoria = categoria;
         this.select = select;
         

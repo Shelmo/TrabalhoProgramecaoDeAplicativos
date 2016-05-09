@@ -4,6 +4,7 @@ import dao.CategoriaDAO;
 import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import java.awt.Component;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -113,7 +114,14 @@ public class MontarTabelas
                 model.setNumRows(0);
                 for (Cliente c : ListaCliente)
                 {
-                    model.addRow(new Object[]{c.getNomeCliente(), c.getCpfCliente(), c.getDataNascimentoCliente(), c.getCidadeCliente(), c.getBairroCliente(), 
+                    String format = null;
+                    if(c.getDataNascimentoCliente() != null)
+                    {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        format = sdf.format(c.getDataNascimentoCliente());
+                    }
+                    
+                    model.addRow(new Object[]{c.getNomeCliente(), c.getCpfCliente(), format, c.getCidadeCliente(), c.getBairroCliente(), 
                             c.getLogradouroCliente(), c.getNumeroCliente(), c.getComplementoCliente(), c.getCepCliente(), c.getFoneCliente(), c.getCelularCliente(),
                             c.getEmailCliente()});
                 }

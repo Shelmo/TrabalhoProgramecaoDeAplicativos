@@ -55,9 +55,9 @@ public abstract class JFrame_Cliente extends JFrame_Base
     private JSeparator jSeparator_DadosPessoais_Endereco;
     private JSeparator jSeparator_Endereco_Contatos;
     
-    public JFrame_Cliente(String image)
+    public JFrame_Cliente()
     {
-        super(image);
+        super("src\\Imagens\\TelaCliente.jpg");
         Componentes();
     }
     
