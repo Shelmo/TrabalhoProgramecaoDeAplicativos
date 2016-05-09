@@ -99,8 +99,8 @@ public abstract class JFrame_BaseLocalizar extends JFrame_Base
                 {
                     jCheckBox2.setSelected(false);
                     jCheckBox3.setSelected(false);
-                    AcaoJCheckBox1();
                 }
+                AcaoJCheckBox1();
             }
         });
         
@@ -115,8 +115,8 @@ public abstract class JFrame_BaseLocalizar extends JFrame_Base
                 {
                     jCheckBox1.setSelected(false);
                     jCheckBox3.setSelected(false);
-                    AcaoJCheckBox2();
                 }
+                AcaoJCheckBox2();
             }
         });
         
@@ -131,8 +131,8 @@ public abstract class JFrame_BaseLocalizar extends JFrame_Base
                 {
                     jCheckBox1.setSelected(false);
                     jCheckBox2.setSelected(false);
-                    AcaoJCheckBox3();
                 }
+                AcaoJCheckBox3();
             }
         });
         

@@ -48,7 +48,7 @@ public class ClienteDAO
         Conecta conexao = new Conecta();
         String sql = "UPDATE Cliente SET nome = ?, cpf = ?, cidade = ?,"
                 + "bairro = ?, logradouro = ?, numero = ?, complemento = ?,"
-                + "CEP = ?, fone = ?, celular=?, email = ?, dataNasc = ?"
+                + "CEP = ?, fone = ?, celular=?, email = ?, dataNasc = ? "
                 + "WHERE id = ?";
         
         conexao.pStmt(sql);

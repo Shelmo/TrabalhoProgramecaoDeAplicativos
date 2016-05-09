@@ -171,6 +171,12 @@ public class MontarTabelas
         TabelaProdutos();
     }
     
+    public static void addCliente(Cliente cliente)
+    {
+        ListaCliente.add(cliente);
+        TabelaClientes();
+    }
+    
     public static void removeCategoria(int select)
     {
         ListaCategoria.remove(select);
@@ -181,6 +187,12 @@ public class MontarTabelas
     {
         ListaProdutos.remove(select);
         TabelaProdutos();
+    }
+    
+    public static void removeCliente(int select)
+    {
+        ListaCliente.remove(select);
+        TabelaClientes();
     }
     
     public static void updateCategoria(Categoria categoria, int select)
@@ -194,6 +206,12 @@ public class MontarTabelas
         ListaProdutos.set(select, produto);
         TabelaProdutos();
     }
+    
+    public static void updateCliente(int select, Cliente cliente)
+    {
+        ListaCliente.set(select, cliente);
+        TabelaClientes();
+    }
 
     public static ArrayList<Categoria> getListaCategoria()
     {
@@ -203,6 +221,11 @@ public class MontarTabelas
     public static ArrayList<Produto> getListaProduto()
     {
         return ListaProdutos;
+    }
+
+    public static ArrayList<Cliente> getListaCliente()
+    {
+        return ListaCliente;
     }
 
     public static JTable getjTable_Tabelas()

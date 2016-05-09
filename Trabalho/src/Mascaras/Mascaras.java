@@ -1,8 +1,8 @@
 package Mascaras;
 
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -11,48 +11,35 @@ import javax.swing.text.MaskFormatter;
  */
 public class Mascaras
 {
-    public static MaskFormatter MascaraData()
+    public static char NULO = '\0';
+    
+    public static JFormattedTextField setFormat(String mascara, char caractereReposicao)
     {
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("##/##/####");
-            mask.setPlaceholderCharacter('_');
-        } catch (ParseException ex) {
+        JFormattedTextField jFormattedTextField = new JFormattedTextField();
+        try
+        {
+            MaskFormatter mask = new MaskFormatter(mascara);
+            if(caractereReposicao != '\0')
+                mask.setPlaceholderCharacter(caractereReposicao);
+            jFormattedTextField.setFormatterFactory(new DefaultFormatterFactory(mask));
         }
+        catch (ParseException exc){}
         
-        return mask;
+        return jFormattedTextField;
     }
     
-    public static MaskFormatter MascaraTelefone()
+    public static JFormattedTextField setFormat(JFormattedTextField jFormattedTextField,
+            String mascara, char caractereReposicao)
     {
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("(##)####-####");
-        } catch (ParseException ex) {
+        try
+        {
+            MaskFormatter mask = new MaskFormatter(mascara);
+            if(caractereReposicao != '\0')
+                mask.setPlaceholderCharacter(caractereReposicao);
+            jFormattedTextField.setFormatterFactory(new DefaultFormatterFactory(mask));
         }
-        mask.setPlaceholderCharacter('_');
-        return mask;
-    }
-    
-    public static MaskFormatter MascaraCPF()
-    {
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("###.###.###-##");
-        } catch (ParseException ex) {
-        }
-        mask.setPlaceholderCharacter('_');
-        return mask;
-    }
-    
-    public static MaskFormatter MascaraCEP()
-    {
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("##.###-###");
-        } catch (ParseException ex) {
-        }
-        mask.setPlaceholderCharacter('_');
-        return mask;
+        catch (ParseException exc){}
+        
+        return jFormattedTextField;
     }
 }

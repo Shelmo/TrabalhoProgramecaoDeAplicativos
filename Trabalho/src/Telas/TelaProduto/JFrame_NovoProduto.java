@@ -14,7 +14,7 @@ public class JFrame_NovoProduto extends JFrame_Produto
     public JFrame_NovoProduto()
     {
         super(null);
-        getjLabel_Titulo().setText("Nova Categoria");
+        getjLabel_Titulo().setText("Novo Produto");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");
     }

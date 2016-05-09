@@ -6,6 +6,11 @@ import Telas.TelaCategoria.JFrame_AlterarCategoria;
 import Telas.TelaCategoria.JFrame_LocalizarCategoria;
 import Telas.TelaCategoria.JFrame_NovaCategoria;
 import Telas.TelaCategoria.JFrame_RemoverCategoria;
+import Telas.TelaCliente.JFrame_AlterarCliente;
+import Telas.TelaCliente.JFrame_Cliente;
+import Telas.TelaCliente.JFrame_LocalizarCliente;
+import Telas.TelaCliente.JFrame_NovoCliente;
+import Telas.TelaCliente.JFrame_RemoverCliente;
 import Telas.TelaProduto.JFrame_AlterarProduto;
 import Telas.TelaProduto.JFrame_LocalizarProduto;
 import Telas.TelaProduto.JFrame_NovoProduto;
@@ -160,6 +165,8 @@ public class JFrame_Principal extends JFrame_Base
                     new JFrame_NovaCategoria();
                 if(ProdutoSelecionado)
                     new JFrame_NovoProduto();
+                if(ClienteSelecionado)
+                    new JFrame_NovoCliente();
             }
         });
         
@@ -173,6 +180,8 @@ public class JFrame_Principal extends JFrame_Base
                     Remover(CATEGORIA);
                 if(ProdutoSelecionado)
                     Remover(PRODUTO);
+                if(ClienteSelecionado)
+                    Remover(CLIENTE);
             }
         });
         
@@ -185,7 +194,9 @@ public class JFrame_Principal extends JFrame_Base
                 if(CategoriaSelecionado)
                     Alterar(CATEGORIA);
                 if(ProdutoSelecionado)
-                        Alterar(PRODUTO);
+                    Alterar(PRODUTO);
+                if(ClienteSelecionado)
+                    Alterar(CLIENTE);
             }
         });
         
@@ -199,6 +210,8 @@ public class JFrame_Principal extends JFrame_Base
                     Localizar(CATEGORIA);
                 if(ProdutoSelecionado)
                     Localizar(PRODUTO);
+                if(ClienteSelecionado)
+                    Localizar(CLIENTE);
             }
         });
         
@@ -224,6 +237,8 @@ public class JFrame_Principal extends JFrame_Base
                         Alterar(CATEGORIA);
                     if(ProdutoSelecionado)
                         Alterar(PRODUTO);
+                    if(ClienteSelecionado)
+                        Alterar(CLIENTE);
                 }
             }
         });
@@ -245,11 +260,14 @@ public class JFrame_Principal extends JFrame_Base
         if(select == -1)
             return;
         
-        if(constante == 0)
+        if(constante == CATEGORIA)
             new JFrame_RemoverCategoria(select, MontarTabelas.getListaCategoria().get(select));
         
-        if(constante == 1)
+        if(constante == PRODUTO)
             new JFrame_RemoverProduto(select, MontarTabelas.getListaProduto().get(select));
+        
+        if(constante == CLIENTE)
+            new JFrame_RemoverCliente(select, MontarTabelas.getListaCliente().get(select));
     }
     
     private void Alterar(int constante)
@@ -259,21 +277,27 @@ public class JFrame_Principal extends JFrame_Base
         if(select == -1)
             return;
         
-        if(constante == 0)
+        if(constante == CATEGORIA)
             new JFrame_AlterarCategoria(select, MontarTabelas.getListaCategoria().get(select));
         
-        if(constante == 1)
+        if(constante == PRODUTO)
             new JFrame_AlterarProduto(select, MontarTabelas.getListaProduto().get(select));
+        
+        if(constante == CLIENTE)
+            new JFrame_AlterarCliente(select, MontarTabelas.getListaCliente().get(select));
     }
     
     private void Localizar(int constante)
     {
         int select = SelecionarTabela(false);
-        if(constante == 0)
+        if(constante == CATEGORIA)
             new JFrame_LocalizarCategoria(select);
         
-        if(constante == 1)
+        if(constante == PRODUTO)
             new JFrame_LocalizarProduto(select);
+        
+        if(constante == CLIENTE)
+            new JFrame_LocalizarCliente(select);
     }
     
     private void MontarJPanelCentral(int constante)
