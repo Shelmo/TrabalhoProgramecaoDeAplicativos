@@ -55,6 +55,8 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
+            ListaCategoria.clear();
+            ListaCategoria = CategoriaDAO.getListaCategorias();
             if (!ListaCategoria.isEmpty())
             {
                 String[] nomeColunas = {"Categorias"};
@@ -75,6 +77,8 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
+            ListaProdutos.clear();
+            ListaProdutos = ProdutoDAO.getListaProdutos();
             if (!ListaProdutos.isEmpty())
             {
                 String[] nomeColunas = {"Categoria", "Nome", "Valor (R$)", "Descrição"};
@@ -105,6 +109,8 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
+            ListaCliente.clear();
+            ListaCliente = ClienteDAO.getListaCliente();
             if (!ListaCliente.isEmpty())
             {
                 String[] nomeColunas = {"Nome", "CPF", "Data de Nascimento", "Cidade", "Bairro", "Logradouro",

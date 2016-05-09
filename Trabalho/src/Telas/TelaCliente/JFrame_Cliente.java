@@ -9,6 +9,7 @@ import Telas.JFrame_Base;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
@@ -98,9 +99,6 @@ public abstract class JFrame_Cliente extends JFrame_Base
         
         jSeparator_DadosPessoais_Endereco = new JSeparator();
         jSeparator_Endereco_Contatos = new JSeparator();
-        
-        jSeparator_DadosPessoais_Endereco.setPreferredSize(new Dimension(570, 10));
-        jSeparator_Endereco_Contatos.setPreferredSize(new Dimension(570, 10));
 
         
         //Texto e formatações
@@ -131,6 +129,8 @@ public abstract class JFrame_Cliente extends JFrame_Base
         jTextField_Cidade.setDocument(new Mascaras.Document_CaracteresLimitados(255));
         jTextField_Bairro.setDocument(new Mascaras.Document_CaracteresLimitados(255));
         jTextField_Numero.setDocument(new Mascaras.Document_Inteiro());
+        jSeparator_DadosPessoais_Endereco.setPreferredSize(new Dimension(530, 10));
+        jSeparator_Endereco_Contatos.setPreferredSize(new Dimension(530, 10));
         
         //Posicionar Componentes
         getGBC().fill = GridBagConstraints.NONE;
@@ -177,10 +177,12 @@ public abstract class JFrame_Cliente extends JFrame_Base
         getGBC().gridy = 5;
         getGBC().gridwidth = 4;
         getGBC().anchor = GridBagConstraints.CENTER;
+        getGBC().insets = new Insets(5, 5, 5, 5);
         getjPanel_CENTER().add(jSeparator_DadosPessoais_Endereco, getGBC());
         
         //Linha 6
         getGBC().gridy = 6;
+        getGBC().insets = new Insets(1, 1, 1, 1);
         getjPanel_CENTER().add(jLabel_Endereco, getGBC());
         
         //Linha 7
@@ -223,10 +225,12 @@ public abstract class JFrame_Cliente extends JFrame_Base
         getGBC().gridy = 10;
         getGBC().gridwidth = 4;
         getGBC().anchor = GridBagConstraints.CENTER;
+        getGBC().insets = new Insets(5, 5, 5, 5);
         getjPanel_CENTER().add(jSeparator_Endereco_Contatos, getGBC());
         
         //Linha 11
         getGBC().gridy = 11;
+        getGBC().insets = new Insets(1, 1, 1, 1);
         getjPanel_CENTER().add(jLabel_Contados, getGBC());
         
         //Linha 12

@@ -2,6 +2,7 @@ package Telas.TelaPrincipal;
 
 import Tabelas.MontarTabelas;
 import Telas.JFrame_Base;
+import Telas.Modal;
 import Telas.TelaCategoria.JFrame_AlterarCategoria;
 import Telas.TelaCategoria.JFrame_LocalizarCategoria;
 import Telas.TelaCategoria.JFrame_NovaCategoria;
@@ -16,10 +17,10 @@ import Telas.TelaProduto.JFrame_NovoProduto;
 import Telas.TelaProduto.JFrame_RemoverProduto;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -216,11 +217,12 @@ public class JFrame_Principal extends JFrame_Base
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 if(CategoriaSelecionado)
-                    new JFrame_NovaCategoria();
+                    Modal(new JFrame_NovaCategoria());
                 if(ProdutoSelecionado)
-                    new JFrame_NovoProduto();
+                    Modal(new JFrame_NovoProduto());
                 if(ClienteSelecionado)
-                    new JFrame_NovoCliente();
+                    Modal(new JFrame_NovoCliente());
+                
             }
         });
         
@@ -302,7 +304,7 @@ public class JFrame_Principal extends JFrame_Base
         jMenu_Sobre.addMouseListener(new java.awt.event.MouseAdapter()
         {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void mousePressed(java.awt.event.MouseEvent evt)
             {
                 JOptionPane.showMessageDialog(getjPanel_CENTER(), "Teabalho de Programação de Aplicativos\n"
                         + "Acadêmico: Shelmo Lucas Baches", "Sobre", 3);
@@ -312,7 +314,7 @@ public class JFrame_Principal extends JFrame_Base
         jMenu_Categoria.addMouseListener(new java.awt.event.MouseAdapter()
         {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void mousePressed(java.awt.event.MouseEvent evt)
             {
                 TrocaTela(CATEGORIA);
             }
@@ -322,7 +324,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                new JFrame_NovaCategoria();
+                Modal(new JFrame_NovaCategoria());
             }
         });
         jMenuItem_LocalizarCategoria.addActionListener(new java.awt.event.ActionListener()
@@ -338,7 +340,7 @@ public class JFrame_Principal extends JFrame_Base
         jMenu_Produto.addMouseListener(new java.awt.event.MouseAdapter()
         {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void mousePressed(java.awt.event.MouseEvent evt)
             {
                 TrocaTela(PRODUTO);
             }
@@ -348,7 +350,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                new JFrame_NovoProduto();
+                Modal(new JFrame_NovoProduto());
             }
         });
         jMenuItem_LocalizarProduto.addActionListener(new java.awt.event.ActionListener()
@@ -363,7 +365,7 @@ public class JFrame_Principal extends JFrame_Base
         jMenu_Cliente.addMouseListener(new java.awt.event.MouseAdapter()
         {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void mousePressed(java.awt.event.MouseEvent evt)
             {
                 TrocaTela(CLIENTE);
             }
@@ -373,7 +375,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                new JFrame_NovoCliente();
+                Modal(new JFrame_NovoCliente());
             }
         });
         jMenuItem_LocalizarCliente.addActionListener(new java.awt.event.ActionListener()
@@ -413,13 +415,13 @@ public class JFrame_Principal extends JFrame_Base
             return;
         
         if(constante == CATEGORIA)
-            new JFrame_RemoverCategoria(select, MontarTabelas.getListaCategoria().get(select));
+            Modal(new JFrame_RemoverCategoria(select, MontarTabelas.getListaCategoria().get(select)));
         
         if(constante == PRODUTO)
-            new JFrame_RemoverProduto(select, MontarTabelas.getListaProduto().get(select));
+            Modal(new JFrame_RemoverProduto(select, MontarTabelas.getListaProduto().get(select)));
         
         if(constante == CLIENTE)
-            new JFrame_RemoverCliente(select, MontarTabelas.getListaCliente().get(select));
+            Modal(new JFrame_RemoverCliente(select, MontarTabelas.getListaCliente().get(select)));
     }
     
     private void Alterar(int constante)
@@ -430,26 +432,26 @@ public class JFrame_Principal extends JFrame_Base
             return;
         
         if(constante == CATEGORIA)
-            new JFrame_AlterarCategoria(select, MontarTabelas.getListaCategoria().get(select));
+            Modal(new JFrame_AlterarCategoria(select, MontarTabelas.getListaCategoria().get(select)));
         
         if(constante == PRODUTO)
-            new JFrame_AlterarProduto(select, MontarTabelas.getListaProduto().get(select));
+            Modal(new JFrame_AlterarProduto(select, MontarTabelas.getListaProduto().get(select)));
         
         if(constante == CLIENTE)
-            new JFrame_AlterarCliente(select, MontarTabelas.getListaCliente().get(select));
+            Modal(new JFrame_AlterarCliente(select, MontarTabelas.getListaCliente().get(select)));
     }
     
     private void Localizar(int constante)
     {
         int select = SelecionarTabela(false);
         if(constante == CATEGORIA)
-            new JFrame_LocalizarCategoria(select);
+            Modal(new JFrame_LocalizarCategoria(select));
         
         if(constante == PRODUTO)
-            new JFrame_LocalizarProduto(select);
+            Modal(new JFrame_LocalizarProduto(select));
         
         if(constante == CLIENTE)
-            new JFrame_LocalizarCliente(select);
+            Modal(new JFrame_LocalizarCliente(select));
     }
     
     private void MontarJPanelCentral(int constante)
@@ -502,6 +504,11 @@ public class JFrame_Principal extends JFrame_Base
         
         if(constante == 2)
             ClienteSelecionado = true;
+    }
+    
+    private void Modal(JFrame jFrame)
+    {
+        Modal.showAsModal(jFrame, this);
     }
     
     @Override

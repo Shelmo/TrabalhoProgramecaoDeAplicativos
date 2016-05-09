@@ -16,7 +16,7 @@ public class CategoriaDAO
     public static void incluirCategoria(Categoria cat)
     {
         Conecta conexao = new Conecta();
-        String sql = "INSERT INTO Categoria VALUES(NULL, ?)";
+        String sql = "INSERT INTO Categoria VALUES(NULL, ?);";
         conexao.pStmt(sql);
         try
         {
@@ -34,7 +34,7 @@ public class CategoriaDAO
     public static void alterarCategoria(Categoria cat)
     {
         Conecta conexao = new Conecta();
-        String sql = "UPDATE Categoria SET nome = ? WHERE id = ?";
+        String sql = "UPDATE Categoria SET nome = ? WHERE id = ?;";
         
         conexao.pStmt(sql);
         
@@ -56,7 +56,7 @@ public class CategoriaDAO
     public static void excluirCategoria(Categoria cat)
     {
         Conecta conexao = new Conecta();
-        String sql = "DELETE FROM Categoria WHERE id = ?";
+        String sql = "DELETE FROM Categoria WHERE id = ?;";
         conexao.pStmt(sql);
         try
         {
@@ -78,7 +78,7 @@ public class CategoriaDAO
         Categoria cat = new Categoria();
         try
         {
-            ResultSet rSet = conexao.getPreparedStatement().executeQuery("SELECT * FROM Categoria");
+            ResultSet rSet = conexao.getPreparedStatement().executeQuery("SELECT * FROM Categoria;");
             for(;rSet.next();)
             {
                 cat = new Categoria();
@@ -103,7 +103,7 @@ public class CategoriaDAO
         Conecta conexao = new Conecta();
         ArrayList<Categoria> listaCat = new ArrayList<Categoria>();
         Categoria cat = new Categoria();
-        String sql = "SELECT * FROM Categoria WHERE Categoria.nome like ?";
+        String sql = "SELECT * FROM Categoria WHERE Categoria.nome like ?;";
         conexao.pStmt(sql);
         try
         {
