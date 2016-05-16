@@ -1,7 +1,7 @@
 package Telas.TelaCategoria;
 
 import Tabelas.MontarTabelas;
-import dao.CategoriaDAO;
+import dao.DAO_Generalizado;
 import model.Categoria;
 
 /**
@@ -23,13 +23,14 @@ public class JFrame_NovaCategoria extends JFrame_Categoria
     {
         LimparjLabel_Erro();
         
-        Categoria c = new Categoria();
-        c.setNomeCategoria(getjTextField_Nome().getText());
+        Categoria categoria = new Categoria();
+        categoria.setNomeCategoria(getjTextField_Nome().getText());
         
         if(Verificacoes())
         {
-            CategoriaDAO.incluirCategoria(c);
-            MontarTabelas.addCategoria(c);
+            int id = (int) DAO_Generalizado.incluirAlterar(categoria, DAO_Generalizado.SALVAR);
+            categoria.setIdCategoria(id);
+            MontarTabelas.addCategoria(categoria);
             LimparCampos();
         }
     }

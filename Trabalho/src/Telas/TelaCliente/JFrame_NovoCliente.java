@@ -1,7 +1,7 @@
 package Telas.TelaCliente;
 
 import Tabelas.MontarTabelas;
-import dao.ClienteDAO;
+import dao.DAO_Generalizado;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +55,8 @@ public class JFrame_NovoCliente extends JFrame_Cliente
             }
             catch (ParseException ex){}
             
-            ClienteDAO.incluirCliente(cliente);
+            int id = (int) DAO_Generalizado.incluirAlterar(cliente, DAO_Generalizado.SALVAR);
+            cliente.setIdCliente(id);
             MontarTabelas.addCliente(cliente);
             LimparCampos();
         }

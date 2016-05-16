@@ -1,7 +1,7 @@
 package Telas.TelaProduto;
 
 import Tabelas.MontarTabelas;
-import dao.ProdutoDAO;
+import dao.DAO_Generalizado;
 import model.Produto;
 
 /**
@@ -37,7 +37,7 @@ public class JFrame_RemoverProduto extends JFrame_Produto
     @Override
     public void Confirmar()
     {
-        ProdutoDAO.excluirProduto(produto);
+        DAO_Generalizado.remover(produto);
         MontarTabelas.removeProduto(select);
         dispose();
     }

@@ -1,7 +1,7 @@
 package Telas.TelaCliente;
 
 import Tabelas.MontarTabelas;
-import dao.ClienteDAO;
+import dao.DAO_Generalizado;
 import java.text.SimpleDateFormat;
 import model.Cliente;
 
@@ -59,7 +59,7 @@ public class JFrame_RemoverCliente extends JFrame_Cliente
     @Override
     public void Confirmar()
     {
-        ClienteDAO.excluirCliente(cliente);
+        DAO_Generalizado.remover(cliente);
         MontarTabelas.removeCliente(select);
         dispose();
     }

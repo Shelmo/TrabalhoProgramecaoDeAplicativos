@@ -1,8 +1,8 @@
 package Telas.TelaProduto;
 
 import Tabelas.MontarTabelas;
-import Telas.JFrame_Base;
-import dao.ProdutoDAO;
+import dao.DAO_Generalizado;
+import model.Categoria;
 import model.Produto;
 
 /**
@@ -27,12 +27,13 @@ public class JFrame_NovoProduto extends JFrame_Produto
         if(Verificaoes())
         {
             Produto produto = new Produto();
-            produto.setIdCategoriaProduto(getjComboBox_Categoria().getSelectedIndex());
+            produto.setCategoria((Categoria) getjComboBox_Categoria().getSelectedItem());
             produto.setNomeProduto(getjTextField_Nome().getText());
             String valor = getjTextField_Valor().getText().replace(',', '.');
             produto.setValorProduto(Double.parseDouble(valor));
             produto.setDescricaoProduto(getjTextArea_Descricao().getText());
-            ProdutoDAO.incluirProduto(produto);
+            int id = (int) DAO_Generalizado.incluirAlterar(produto, DAO_Generalizado.SALVAR);
+            produto.setIdProduto(id);
             MontarTabelas.addProduto(produto);
             LimparCampos();
         }

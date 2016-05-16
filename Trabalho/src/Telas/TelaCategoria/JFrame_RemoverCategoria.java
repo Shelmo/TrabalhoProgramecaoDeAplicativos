@@ -1,7 +1,7 @@
 package Telas.TelaCategoria;
 
 import Tabelas.MontarTabelas;
-import dao.CategoriaDAO;
+import dao.DAO_Generalizado;
 import model.Categoria;
 
 /**
@@ -30,7 +30,7 @@ public class JFrame_RemoverCategoria extends JFrame_Categoria
     @Override
     public void Confirmar()
     {
-        CategoriaDAO.excluirCategoria(categoria);
+        DAO_Generalizado.remover(categoria);
         MontarTabelas.removeCategoria(select);
         dispose();
     }

@@ -32,12 +32,8 @@ public class Modal
         public void start() throws Exception
         {
             Class clazz = Class.forName("java.awt.Conditional");
-            Object conditional = Proxy.newProxyInstance(
-                    clazz.getClassLoader(),
-                    new Class[]{clazz},
-                    this);
-            Method pumpMethod = Class.forName("java.awt.EventDispatchThread")
-                    .getDeclaredMethod("pumpEvents", new Class[]{clazz});
+            Object conditional = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this);
+            Method pumpMethod = Class.forName("java.awt.EventDispatchThread").getDeclaredMethod("pumpEvents", new Class[]{clazz});
             pumpMethod.setAccessible(true);
             pumpMethod.invoke(Thread.currentThread(), new Object[]{conditional});
         }

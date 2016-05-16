@@ -1,24 +1,61 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 /**
  *
  * @author Shelmo
  */
+
+@Entity
+@Table(name = "Cliente")
 public class Cliente
 {
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private int idCliente;
+    
+    @Column(name = "nome", length = 255, nullable = true)
     private String nomeCliente;
+    
+    @Column(name = "cpf", length = 14, nullable = true)
     private String cpfCliente;
+    
+    @Column(name = "cidade", length = 255)
     private String cidadeCliente;
+    
+    @Column(name = "bairro", length = 255)
     private String bairroCliente;
+    
+    @Column(name = "logradouro", length = 255)
     private String logradouroCliente;
+    
+    @Column(name = "numero")
     private int numeroCliente;
+    
+    @Column(name = "complemento", length = 255)
     private String complementoCliente;
+    
+    @Column(name = "cep", length = 10)
     private String cepCliente;
+    
+    @Column(name = "fone", length = 13)
     private String foneCliente;
+    
+    @Column(name = "celular", length = 13)
     private String celularCliente;
+    
+    @Column(name = "email", length = 255)
     private String emailCliente;
+    
+    @Column(name = "dataNasc")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimentoCliente;
     
     

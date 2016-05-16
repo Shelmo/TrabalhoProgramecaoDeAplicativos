@@ -1,22 +1,45 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author Shelmo
  */
+
+@Entity
+@Table(name = "Produto")
 public class Produto
 {
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private int idProduto;
-    private int idCategoriaProduto;
+    
+    @OneToOne
+    @JoinColumn(name = "idCategoria", insertable = true, updatable = true)
+    private Categoria categoria;
+    
+    @Column(name = "nome", length = 255, nullable = true)
     private String nomeProduto;
+    
+    @Column(name = "descricao", length = 255)
     private String descricaoProduto;
+    
+    @Column(name = "valor", nullable = true)
     private double valorProduto;
     
     public Produto(){}
 
-    public Produto(int idCategoriaProduto, String nomeProduto, String descricaoProduto, double valorProduto)
+    public Produto(Categoria categoria, String nomeProduto, String descricaoProduto, double valorProduto)
     {
-        this.idCategoriaProduto = idCategoriaProduto;
+        this.categoria = categoria;
         this.nomeProduto = nomeProduto;
         this.descricaoProduto = descricaoProduto;
         this.valorProduto = valorProduto;
@@ -32,14 +55,14 @@ public class Produto
         this.idProduto = idProduto;
     }
 
-    public int getIdCategoriaProduto()
+    public Categoria getCategoria()
     {
-        return idCategoriaProduto;
+        return categoria;
     }
 
-    public void setIdCategoriaProduto(int idCategoriaProduto)
+    public void setCategoria(Categoria categoria)
     {
-        this.idCategoriaProduto = idCategoriaProduto;
+        this.categoria = categoria;
     }
 
     public String getNomeProduto()

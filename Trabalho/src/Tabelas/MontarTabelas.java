@@ -1,8 +1,6 @@
 package Tabelas;
 
-import dao.CategoriaDAO;
-import dao.ClienteDAO;
-import dao.ProdutoDAO;
+import dao.DAO_Generalizado;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,9 +25,9 @@ public class MontarTabelas
     public MontarTabelas()
     {
         MontarTabelas.jTable_Tabelas = new JTable();
-        MontarTabelas.ListaCategoria = CategoriaDAO.getListaCategorias();
-        MontarTabelas.ListaProdutos = ProdutoDAO.getListaProdutos();
-        MontarTabelas.ListaCliente = ClienteDAO.getListaCliente();
+        MontarTabelas.ListaCategoria = (ArrayList<Categoria>) DAO_Generalizado.getList("from Categoria");
+        MontarTabelas.ListaProdutos = (ArrayList<Produto>) DAO_Generalizado.getList("from Produto");
+        MontarTabelas.ListaCliente = (ArrayList<Cliente>) DAO_Generalizado.getList("from Cliente");
         MontarTabelas.jTable_Tabelas.getTableHeader().setReorderingAllowed(false);
         MontarTabelas.jTable_Tabelas.setModel(new javax.swing.table.DefaultTableModel()
         {
@@ -55,14 +53,12 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
-            ListaCategoria.clear();
-            ListaCategoria = CategoriaDAO.getListaCategorias();
+            String[] nomeColunas = {"Categorias"};
+            DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
+            model.setColumnIdentifiers(nomeColunas);
+            model.setNumRows(0);
             if (!ListaCategoria.isEmpty())
             {
-                String[] nomeColunas = {"Categorias"};
-                DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
-                model.setColumnIdentifiers(nomeColunas);
-                model.setNumRows(0);
                 for (Categoria c : ListaCategoria)
                 {
                     model.addRow(new Object[]{c.getNomeCategoria()});
@@ -77,27 +73,16 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
-            ListaProdutos.clear();
-            ListaProdutos = ProdutoDAO.getListaProdutos();
+            String[] nomeColunas = {"Categoria", "Nome", "Valor (R$)", "Descrição"};
+            DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
+            model.setColumnIdentifiers(nomeColunas);
+            model.setNumRows(0);
             if (!ListaProdutos.isEmpty())
             {
-                String[] nomeColunas = {"Categoria", "Nome", "Valor (R$)", "Descrição"};
-                DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
-                model.setColumnIdentifiers(nomeColunas);
-                model.setNumRows(0);
                 for (Produto p : ListaProdutos)
                 {
-                    String nomeCategoria = null;
                     String valor = String.valueOf(String.format("%.2f", p.getValorProduto())).replace(".", ",");
-                    for(Categoria c : ListaCategoria)
-                    {
-                        if(c.getIdCategoria() == p.getIdCategoriaProduto())
-                        {
-                            nomeCategoria = c.getNomeCategoria();
-                            break;
-                        }
-                    }
-                    model.addRow(new Object[]{nomeCategoria, p.getNomeProduto(), valor, p.getDescricaoProduto()});
+                    model.addRow(new Object[]{p.getCategoria(), p.getNomeProduto(), valor, p.getDescricaoProduto()});
                 }
             }
         }
@@ -109,15 +94,13 @@ public class MontarTabelas
         try
         {
             jTable_Tabelas.removeAll();
-            ListaCliente.clear();
-            ListaCliente = ClienteDAO.getListaCliente();
+            String[] nomeColunas = {"Nome", "CPF", "Data de Nascimento", "Cidade", "Bairro", "Logradouro",
+                "Número", "Complemento", "CEP", "Telefone", "Celular", "E-mail"};
+            DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
+            model.setColumnIdentifiers(nomeColunas);
+            model.setNumRows(0);
             if (!ListaCliente.isEmpty())
             {
-                String[] nomeColunas = {"Nome", "CPF", "Data de Nascimento", "Cidade", "Bairro", "Logradouro",
-                    "Número", "Complemento", "CEP", "Telefone", "Celular", "E-mail"};
-                DefaultTableModel model = (DefaultTableModel) jTable_Tabelas.getModel();
-                model.setColumnIdentifiers(nomeColunas);
-                model.setNumRows(0);
                 for (Cliente c : ListaCliente)
                 {
                     String format = null;

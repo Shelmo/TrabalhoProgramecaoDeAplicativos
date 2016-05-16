@@ -1,7 +1,7 @@
 package Telas.TelaCliente;
 
 import Tabelas.MontarTabelas;
-import dao.ClienteDAO;
+import dao.DAO_Generalizado;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,7 +76,7 @@ public class JFrame_AlterarCliente extends JFrame_Cliente
             }
             catch (ParseException ex){}
             
-            ClienteDAO.alterarCliente(cliente);
+            DAO_Generalizado.incluirAlterar(cliente, DAO_Generalizado.ATUALIZAR);
             MontarTabelas.updateCliente(select, cliente);
             dispose();
         }

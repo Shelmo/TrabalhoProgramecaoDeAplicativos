@@ -1,12 +1,26 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author Shelmo
  */
+
+@Entity
+@Table(name = "Categoria")
 public class Categoria
 {
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private int idCategoria;
+    
+    @Column(name = "nome", length = 255, nullable = true)
     private String nomeCategoria;
     
     public Categoria(){}

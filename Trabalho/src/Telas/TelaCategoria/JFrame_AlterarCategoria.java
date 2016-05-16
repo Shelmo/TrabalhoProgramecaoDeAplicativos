@@ -1,7 +1,7 @@
 package Telas.TelaCategoria;
 
 import Tabelas.MontarTabelas;
-import dao.CategoriaDAO;
+import dao.DAO_Generalizado;
 import model.Categoria;
 
 /**
@@ -34,7 +34,7 @@ public class JFrame_AlterarCategoria extends JFrame_Categoria
         
         if(Verificacoes())
         {
-            CategoriaDAO.alterarCategoria(categoria);
+            DAO_Generalizado.incluirAlterar(categoria, DAO_Generalizado.ATUALIZAR);
             MontarTabelas.updateCategoria(categoria, select);
             LimparCampos();
             dispose();

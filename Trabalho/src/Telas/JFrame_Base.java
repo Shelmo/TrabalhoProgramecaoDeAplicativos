@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import util.Hibernate;
 
 /**
  *
@@ -82,14 +83,17 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         jButton_Voltar.setText("Voltar");
         jButton_Voltar.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
+                Hibernate.CloseSession();
                 dispose();
             }
         });
         
         jButton_Confirmar.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 Confirmar();

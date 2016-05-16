@@ -15,9 +15,18 @@ import javax.swing.text.PlainDocument;
  */
 public class Document_Float extends PlainDocument 
 {
+    @Override
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
     {
         String texto = getText(0, getLength());
+        try
+        {
+            Integer.parseInt(str);
+        }
+        catch (NumberFormatException ex)
+        {
+            return;
+        }
         if(texto.length() < 16)
         {
             remove(0, getLength());
