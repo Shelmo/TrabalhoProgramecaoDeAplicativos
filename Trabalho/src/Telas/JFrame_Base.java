@@ -67,7 +67,7 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         jPanel_NORTH_CENTER.setOpaque(false);
         jPanel_NORTH_WEST.setOpaque(false);
 
-        
+        jLabel_Titulo.setFont(new java.awt.Font("Tahoma", 1, 18));
         
         jPanel_SOUTH_CENTER.setLayout(new FlowLayout(FlowLayout.CENTER));
         jPanel_SOUTH_EAST.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -99,8 +99,6 @@ public abstract class JFrame_Base extends javax.swing.JFrame
                 Confirmar();
             }
         });
-        
-        jLabel_Titulo.setFont(new java.awt.Font("Tahoma", 1, 18));
         
         jPanel_SOUTH_CENTER.add(jLabel_Aviso);
         jPanel_SOUTH_EAST.add(jButton_Confirmar);

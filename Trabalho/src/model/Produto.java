@@ -2,10 +2,11 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -22,8 +23,8 @@ public class Produto
     @Column(name = "id")
     private int idProduto;
     
-    @OneToOne
-    @JoinColumn(name = "idCategoria", insertable = true, updatable = true)
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "idCategoria")
     private Categoria categoria;
     
     @Column(name = "nome", length = 255, nullable = true)
@@ -93,5 +94,11 @@ public class Produto
     public void setValorProduto(double valorProduto)
     {
         this.valorProduto = valorProduto;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return  nomeProduto;
     }
 }

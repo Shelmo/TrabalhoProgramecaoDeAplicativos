@@ -211,4 +211,10 @@ public class Cliente
     {
         this.dataNascimentoCliente = dataNascimentoCliente;
     }
+    
+    @Override
+    public String toString()
+    {
+        return  nomeCliente;
+    }
 }

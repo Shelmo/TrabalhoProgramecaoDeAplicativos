@@ -8,8 +8,8 @@ import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationHandler; 
 import java.lang.reflect.Method; 
 import java.lang.reflect.Proxy; 
- 
-// @author Santhosh Kumar T - santhosh@in.fiorano.com 
+
+
 public class Modal
 {
     static class EventPump implements InvocationHandler
@@ -27,8 +27,6 @@ public class Modal
             return frame.isShowing() ? Boolean.TRUE : Boolean.FALSE;
         }
 
-        // when the reflection calls in this method has to be 
-        // replaced once Sun provides a public API to pump events. 
         public void start() throws Exception
         {
             Class clazz = Class.forName("java.awt.Conditional");
@@ -38,10 +36,8 @@ public class Modal
             pumpMethod.invoke(Thread.currentThread(), new Object[]{conditional});
         }
     }
-
-    // show the given frame as modal to the specified owner. 
-    // NOTE: this method returns only after the modal frame is closed. 
-    public static void showAsModal(final Frame frame, final Frame owner)
+    
+    public static void showAsModal(final JFrame frame, final JFrame owner)
     {
         frame.addWindowListener(new WindowAdapter()
         {

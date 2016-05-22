@@ -11,6 +11,7 @@ import Telas.TelaCliente.JFrame_AlterarCliente;
 import Telas.TelaCliente.JFrame_LocalizarCliente;
 import Telas.TelaCliente.JFrame_NovoCliente;
 import Telas.TelaCliente.JFrame_RemoverCliente;
+import Telas.TelaPedido.JFrame_NovoPedido;
 import Telas.TelaProduto.JFrame_AlterarProduto;
 import Telas.TelaProduto.JFrame_LocalizarProduto;
 import Telas.TelaProduto.JFrame_NovoProduto;
@@ -36,14 +37,17 @@ public class JFrame_Principal extends JFrame_Base
     private boolean CategoriaSelecionado;
     private boolean ProdutoSelecionado;
     private boolean ClienteSelecionado;
+    private boolean PedidoSelecionado;
     
     private final int CATEGORIA = 0;
     private final int PRODUTO = 1;
     private final int CLIENTE = 2;
+    private final int PEDIDO = 3;
     
     private JButton jButton_Categoria;
     private JButton jButton_Produto;
     private JButton jButton_Cliente;
+    private JButton jButton_Pedido;
     private JButton jButton_Add;
     private JButton jButton_Remove;
     private JButton jButton_Update;
@@ -72,6 +76,7 @@ public class JFrame_Principal extends JFrame_Base
     {
         super("src\\Imagens\\TelaPrincipal.jpg");
         Componentes();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
     }
     
@@ -81,6 +86,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Categoria = new JButton();
         jButton_Produto = new JButton();
         jButton_Cliente = new JButton();
+        jButton_Pedido = new JButton();
         jButton_Add = new JButton();
         jButton_Close = new JButton();
         jButton_Remove = new JButton();
@@ -108,6 +114,8 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Produto.setIcon(icone);
         icone = new ImageIcon("src\\Imagens\\IconeCliente.png");
         jButton_Cliente.setIcon(icone);
+        icone = new ImageIcon("src\\Imagens\\IconePedidos.png");
+        jButton_Pedido.setIcon(icone);
         icone = new ImageIcon("src\\Imagens\\IconeSair.png");
         getjButton_Voltar().setText(null);
         getjButton_Voltar().setIcon(icone);
@@ -156,6 +164,7 @@ public class JFrame_Principal extends JFrame_Base
         getjPanel_NORTH_CENTER().add(jButton_Categoria);
         getjPanel_NORTH_CENTER().add(jButton_Produto);
         getjPanel_NORTH_CENTER().add(jButton_Cliente);
+        getjPanel_NORTH_CENTER().add(jButton_Pedido);
         
         //Painel Central
         getGBC().fill = GridBagConstraints.NONE;
@@ -210,6 +219,16 @@ public class JFrame_Principal extends JFrame_Base
             }
         });
         
+        //Botão Pedido
+        jButton_Pedido.addActionListener(new java.awt.event.ActionListener()
+        {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                TrocaTela(PEDIDO);
+            }
+        });
+        
         //Botão Adicionar
         jButton_Add.addActionListener(new java.awt.event.ActionListener()
         {
@@ -222,6 +241,8 @@ public class JFrame_Principal extends JFrame_Base
                     Modal(new JFrame_NovoProduto());
                 if(ClienteSelecionado)
                     Modal(new JFrame_NovoCliente());
+                if(PedidoSelecionado)
+                    Modal(new JFrame_NovoPedido());
                 
             }
         });
@@ -396,6 +417,8 @@ public class JFrame_Principal extends JFrame_Base
             MontarJPanelCentral(PRODUTO);
         if(constante == CLIENTE)
             MontarJPanelCentral(CLIENTE);
+        if(constante == PEDIDO)
+            MontarJPanelCentral(PEDIDO);
     }
     
     private int SelecionarTabela(boolean mostrar)
@@ -495,15 +518,19 @@ public class JFrame_Principal extends JFrame_Base
         CategoriaSelecionado = false;
         ProdutoSelecionado = false;
         ClienteSelecionado = false;
+        PedidoSelecionado = false;
         
-        if(constante == 0)
+        if(constante == CATEGORIA)
             CategoriaSelecionado = true;
         
-        if(constante == 1)
+        if(constante == PRODUTO)
             ProdutoSelecionado = true;
         
-        if(constante == 2)
+        if(constante == CLIENTE)
             ClienteSelecionado = true;
+        
+        if(constante == PEDIDO)
+            PedidoSelecionado = true;
     }
     
     private void Modal(JFrame jFrame)
