@@ -1,6 +1,6 @@
 package Telas.TelaCategoria;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCategoria;
 import dao.DAO_Generalizado;
 import model.Categoria;
 
@@ -12,12 +12,14 @@ public class JFrame_AlterarCategoria extends JFrame_Categoria
 {
     private final Categoria categoria;
     private final int select;
+    private final TabelaCategoria tabelaCategoria;
     
-    public JFrame_AlterarCategoria(int select, Categoria categoria)
+    public JFrame_AlterarCategoria(int select, Categoria categoria, TabelaCategoria tabelaCategoria)
     {
         super();
         this.categoria = categoria;
         this.select = select;
+        this.tabelaCategoria = tabelaCategoria;
         
         getjLabel_Titulo().setText("Alterar Categoria");
         getjLabel_Aviso().setText("Alterações não salvas serão perdidas!");
@@ -35,8 +37,7 @@ public class JFrame_AlterarCategoria extends JFrame_Categoria
         if(Verificacoes())
         {
             DAO_Generalizado.incluirAlterar(categoria, DAO_Generalizado.ATUALIZAR);
-            MontarTabelas.updateCategoria(categoria, select);
-            LimparCampos();
+            tabelaCategoria.update(categoria, select);
             dispose();
         }
     }

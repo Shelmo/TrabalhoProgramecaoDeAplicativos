@@ -23,5 +23,7 @@
     <mapping class="model.Categoria"/>
     <mapping class="model.Produto"/>
     <mapping class="model.Cliente"/>
+    <mapping class="model.Pedido"/>
+    <mapping class="model.ItensPedido"/>
   </session-factory>
 </hibernate-configuration>

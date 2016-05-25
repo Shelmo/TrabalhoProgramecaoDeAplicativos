@@ -1,6 +1,6 @@
 package Telas.TelaCategoria;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCategoria;
 import dao.DAO_Generalizado;
 import model.Categoria;
 
@@ -12,12 +12,14 @@ public class JFrame_RemoverCategoria extends JFrame_Categoria
 {
     private final Categoria categoria;
     private final int select;
+    private final TabelaCategoria tabelaCategoria;
     
-    public JFrame_RemoverCategoria(int select, Categoria categoria)
+    public JFrame_RemoverCategoria(int select, Categoria categoria, TabelaCategoria tabelaCategoria)
     {
         super();
         this.categoria = categoria;
         this.select = select;
+        this.tabelaCategoria = tabelaCategoria;
         
         getjLabel_Titulo().setText("Remover Categoria");
         getjLabel_Aviso().setText("Deseja realmente remover essa Categoria?");
@@ -31,7 +33,7 @@ public class JFrame_RemoverCategoria extends JFrame_Categoria
     public void Confirmar()
     {
         DAO_Generalizado.remover(categoria);
-        MontarTabelas.removeCategoria(select);
+        tabelaCategoria.Remove(select);
         dispose();
     }
 }

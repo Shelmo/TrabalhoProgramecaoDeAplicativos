@@ -1,6 +1,6 @@
 package Telas.TelaCategoria;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCategoria;
 import dao.DAO_Generalizado;
 import model.Categoria;
 
@@ -10,9 +10,11 @@ import model.Categoria;
  */
 public class JFrame_NovaCategoria extends JFrame_Categoria
 {
-    public JFrame_NovaCategoria()
+    private final TabelaCategoria tabelaCategoria;
+    public JFrame_NovaCategoria(TabelaCategoria tabelaCategoria)
     {
         super();
+        this.tabelaCategoria = tabelaCategoria;
         getjLabel_Titulo().setText("Nova Categoria");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");
@@ -30,7 +32,7 @@ public class JFrame_NovaCategoria extends JFrame_Categoria
         {
             int id = (int) DAO_Generalizado.incluirAlterar(categoria, DAO_Generalizado.SALVAR);
             categoria.setIdCategoria(id);
-            MontarTabelas.addCategoria(categoria);
+            tabelaCategoria.Add(categoria);
             LimparCampos();
         }
     }

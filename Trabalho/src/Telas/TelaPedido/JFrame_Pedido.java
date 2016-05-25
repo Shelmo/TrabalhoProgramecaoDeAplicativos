@@ -5,14 +5,15 @@ import Telas.JFrame_Base;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import util.Hibernate;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.DefaultFormatter;
 
 /**
  *
@@ -24,6 +25,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
     private JLabel jLabel_Mesa;
     private JLabel jLabel_Itens;
     private JLabel jLabel_Produto;
+    private JLabel jLabel_Quantidade;
     private JLabel jLabel_ErroCliente;
     private JLabel jLabel_ErroMesa;
     private JLabel jLabel_ErroProduto;
@@ -35,6 +37,8 @@ public abstract class JFrame_Pedido extends JFrame_Base
     private JButton jButton_Add;
     private JButton jButton_Remove;
     private JButton jButton_Search;
+    
+    private JSpinner jSpinner_Quantidade;
     
     private JScrollPane jScrollPane_TabelaItensPedido;
     
@@ -53,6 +57,8 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jLabel_Itens = new JLabel();
         jLabel_Mesa = new JLabel();
         jLabel_Produto = new JLabel();
+        jLabel_Quantidade = new JLabel();
+        
         
         jLabel_ErroCliente = new JLabel();
         jLabel_ErroMesa = new JLabel();
@@ -65,6 +71,9 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jButton_Add = new JButton();
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
+        
+        jSpinner_Quantidade = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+        
         jScrollPane_TabelaItensPedido = new JScrollPane(MontarTabelas.TabelaItensPedidos());
         
         //Icone de Botões
@@ -80,10 +89,14 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jLabel_Itens.setText("(*)Itens");
         jLabel_Mesa.setText("(*)Mesa: ");
         jLabel_Produto.setText("Produto:");
+        jLabel_Quantidade.setText("Quantidade:");
         jLabel_ErroCliente.setForeground(Color.red);
         jLabel_ErroMesa.setForeground(Color.red);
         jLabel_ErroProduto.setForeground(Color.red);
         jLabel_Itens.setFont(new java.awt.Font("Tahoma", 1, 18));
+        JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)jSpinner_Quantidade.getEditor();
+        DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false);
         
         //Carregar ComboBox
         jComboBox_Cliente.addItem("---SELECIONE---");
@@ -99,6 +112,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         });
         for(int i = 1;i<16;i++)
             jComboBox_Mesa.addItem("Mesa "+ i);
+        
         
         //Painel Central
         getGBC().fill = GridBagConstraints.BOTH;
@@ -139,7 +153,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getjPanel_CENTER().add(jLabel_Itens, getGBC());
         
         //Linha 5
-        getGBC().anchor = GridBagConstraints.NORTHWEST;
+        getGBC().fill = GridBagConstraints.NONE;
         getGBC().gridx = 0;
         getGBC().gridy = 5;
         getGBC().gridwidth = 1;
@@ -147,17 +161,23 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getGBC().gridx = 1;
         getjPanel_CENTER().add(jComboBox_Produto, getGBC());
         getGBC().gridx = 2;
+        getjPanel_CENTER().add(jLabel_Quantidade, getGBC());
+        getGBC().gridx = 3;
+        getjPanel_CENTER().add(jSpinner_Quantidade, getGBC());
+        getGBC().gridx = 4;
+        getGBC().anchor = GridBagConstraints.NORTHWEST;
         getjPanel_CENTER().add(jButton_Add, getGBC());
         
         //Linha 6
         getGBC().gridx = 1;
         getGBC().gridy = 6;
+        getGBC().gridwidth = 3;
         getjPanel_CENTER().add(jLabel_ErroProduto, getGBC());
         
         //Linha 7
-        getGBC().anchor = GridBagConstraints.NORTHWEST;
         getGBC().gridx = 0;
         getGBC().gridy = 7;
+        getGBC().gridwidth = 1;
         getjPanel_CENTER().add(jButton_Remove, getGBC());
         getGBC().gridx = 1;
         getjPanel_CENTER().add(jButton_Search, getGBC());
@@ -171,5 +191,94 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getGBC().gridwidth = GridBagConstraints.REMAINDER;
         getGBC().gridheight = GridBagConstraints.REMAINDER;  
         getjPanel_CENTER().add(jScrollPane_TabelaItensPedido, getGBC());
+        
+        //Botões
+        
+    }
+    
+    public boolean VerificarProduto()
+    {
+        if(jComboBox_Produto.getSelectedIndex() == 0)
+        {
+            jLabel_ErroProduto.setText("O campo Produto é obrigatório!");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean Verificacoes()
+    {
+        boolean retorno = true;
+        
+        if(jComboBox_Cliente.getSelectedIndex() == 0)
+        {
+            jLabel_ErroCliente.setText("O Campo Cliente é obrigatório!");
+            retorno = false;
+        }
+        
+        if(jComboBox_Mesa.getSelectedIndex() == 0)
+        {
+            jLabel_ErroMesa.setText("O Campo Mesa é obrigatório!");
+            retorno = false;
+        }
+        
+        if(MontarTabelas.getListaItensPedidos().isEmpty())
+        {
+            jLabel_ErroProduto.setText("Nenhum item foi associado ao pedido!");
+            retorno = false;
+        }
+        
+        return retorno;
+    }
+    
+    public void LimparErros()
+    {
+        jLabel_ErroCliente.setText(null);
+        jLabel_ErroMesa.setText(null);
+        jLabel_ErroProduto.setText(null);
+    }
+    
+    public void LimparCampos()
+    {
+        jComboBox_Cliente.setSelectedIndex(0);
+        jComboBox_Mesa.setSelectedIndex(0);
+        jComboBox_Produto.setSelectedIndex(0);
+        MontarTabelas.getListaItensPedidos().clear();
+    }
+
+    public JComboBox getjComboBox_Cliente()
+    {
+        return jComboBox_Cliente;
+    }
+
+    public JComboBox getjComboBox_Mesa()
+    {
+        return jComboBox_Mesa;
+    }
+
+    public JComboBox getjComboBox_Produto()
+    {
+        return jComboBox_Produto;
+    }
+
+    public JButton getjButton_Add()
+    {
+        return jButton_Add;
+    }
+
+    public JButton getjButton_Remove()
+    {
+        return jButton_Remove;
+    }
+
+    public JButton getjButton_Search()
+    {
+        return jButton_Search;
+    }
+
+    public JSpinner getjSpinner_Quantidade()
+    {
+        return jSpinner_Quantidade;
     }
 }

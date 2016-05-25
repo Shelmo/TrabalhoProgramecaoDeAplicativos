@@ -18,13 +18,13 @@ import model.Produto;
  *
  * @author Shelmo
  */
-public class MontarTabelas
+public class MontarTabelas extends JTable
 {
-    private static JTable jTable_Tabelas;
     private static ArrayList<Categoria> ListaCategoria;
     private static ArrayList<Produto> ListaProdutos;
     private static ArrayList<Cliente> ListaCliente;
     private static ArrayList<Pedido> ListaPedido;
+    private static ArrayList<ItensPedido> ListaItensPedidos;
     private static DefaultTableModel model;
     
     public MontarTabelas()
@@ -33,14 +33,8 @@ public class MontarTabelas
         MontarTabelas.ListaProdutos = (ArrayList<Produto>) DAO_Generalizado.getList("from Produto");
         MontarTabelas.ListaCliente = (ArrayList<Cliente>) DAO_Generalizado.getList("from Cliente");
         MontarTabelas.ListaPedido = (ArrayList<Pedido>) DAO_Generalizado.getList("from Pedido");
-        Tabela();
-    }
-    
-    private static void Tabela()
-    {
-        MontarTabelas.jTable_Tabelas = new JTable();
-        MontarTabelas.jTable_Tabelas.getTableHeader().setReorderingAllowed(false);
-        MontarTabelas.jTable_Tabelas.setModel(new javax.swing.table.DefaultTableModel()
+        getTableHeader().setReorderingAllowed(false);
+        setModel(new javax.swing.table.DefaultTableModel()
         {
             @Override
             public boolean isCellEditable(int rowIndex, int mColIndex)
@@ -48,7 +42,7 @@ public class MontarTabelas
                 return false;
             }
         });
-        MontarTabelas.jTable_Tabelas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+        setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
         {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
@@ -57,23 +51,22 @@ public class MontarTabelas
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         });
-        model = (DefaultTableModel) jTable_Tabelas.getModel();
+        model = (DefaultTableModel) getModel();
     }
     
     private static void TabelaCategoria()
     {
         try
         {
-            jTable_Tabelas.removeAll();
             String[] nomeColunas = {"Categorias"};
             model.setColumnIdentifiers(nomeColunas);
             model.setNumRows(0);
             if (!ListaCategoria.isEmpty())
             {
-                for (Categoria c : ListaCategoria)
+                ListaCategoria.stream().forEach((c) ->
                 {
                     model.addRow(new Object[]{c.getNomeCategoria()});
-                }
+                });
             }
         }
         catch(Exception ex){}
@@ -83,9 +76,7 @@ public class MontarTabelas
     {
         try
         {
-            jTable_Tabelas.removeAll();
             String[] nomeColunas = {"Categoria", "Nome", "Valor (R$)", "Descrição"};
-            model = (DefaultTableModel) jTable_Tabelas.getModel();
             model.setColumnIdentifiers(nomeColunas);
             model.setNumRows(0);
             if (!ListaProdutos.isEmpty())
@@ -104,10 +95,8 @@ public class MontarTabelas
     {
         try
         {
-            jTable_Tabelas.removeAll();
             String[] nomeColunas = {"Nome", "CPF", "Data de Nascimento", "Cidade", "Bairro", "Logradouro",
                 "Número", "Complemento", "CEP", "Telefone", "Celular", "E-mail"};
-            model = (DefaultTableModel) jTable_Tabelas.getModel();
             model.setColumnIdentifiers(nomeColunas);
             model.setNumRows(0);
             if (!ListaCliente.isEmpty())
@@ -134,9 +123,7 @@ public class MontarTabelas
     {
         try
         {
-            jTable_Tabelas.removeAll();
             String[] nomeColunas = {"Cliente", "Data", "Mesa"};
-            model = (DefaultTableModel) jTable_Tabelas.getModel();
             model.setColumnIdentifiers(nomeColunas);
             model.setNumRows(0);
             if (!ListaPedido.isEmpty())
@@ -150,26 +137,16 @@ public class MontarTabelas
         catch(Exception ex){}
     }
     
-    public static JTable TabelaItensPedidos()
+    public static void TabelaItensPedidos()
     {
-        ArrayList<ItensPedido> ListaItensPedidos = (ArrayList<ItensPedido>) DAO_Generalizado.getList("from ItensPedido");
         try
         {
-            Tabela();
             String[] nomeColunas = {"Categoria", "Produtos", "Quantidade", "Valor unitário", "Valor Total"};
             model.setColumnIdentifiers(nomeColunas);
             model.setNumRows(0);
-            if (!ListaItensPedidos.isEmpty())
-            {
-                ListaItensPedidos.stream().forEach((i) ->
-                {
-                    model.addRow(new Object[]{i.getProduto().getCategoria(), i.getProduto(), i.getQuantidade()});
-                });
-            }
         }
         catch(Exception ex){}
         
-        return jTable_Tabelas;
     }
     
     public static void SelecionarTabela(int constante)
@@ -184,21 +161,21 @@ public class MontarTabelas
             TabelaPedidos();
     }
     
-    public static boolean SelecionarLinhaTabela(int inicio, int coluna, String Pesquisa, boolean pesquisarAbaixo)
+    public boolean SelecionarLinhaTabela(int inicio, int coluna, String Pesquisa, boolean pesquisarAbaixo)
     {
         if(pesquisarAbaixo)
             inicio++;
         else
             inicio--;
         
-        for(int i = inicio;MontarTabelas.getjTable_Tabelas().getModel().getRowCount() > i;)
+        for(int i = inicio;getModel().getRowCount() > i;)
         {
             if (i < 0)
                 break;
 
-            if (Pesquisa.equalsIgnoreCase((String) MontarTabelas.getjTable_Tabelas().getValueAt(i, coluna)))
+            if (Pesquisa.equalsIgnoreCase((String) getValueAt(i, coluna)))
             {
-                MontarTabelas.getjTable_Tabelas().setRowSelectionInterval(i, i);
+                setRowSelectionInterval(i, i);
                 return true;
             }
 
@@ -245,7 +222,17 @@ public class MontarTabelas
     public static void addPedido(Pedido pedido)
     {
         ListaPedido.add(pedido);
-        TabelaPedidos();
+    }
+    
+    public static void addItemPedido(ItensPedido itensPedido)
+    {
+        if(MontarTabelas.ListaItensPedidos == null)
+        {
+            ListaItensPedidos = new ArrayList<>();
+        }
+        ListaItensPedidos.add(itensPedido);
+        model.addRow(new Object[]{itensPedido.getProduto().getCategoria(), itensPedido.getProduto(), itensPedido.getQuantidade(),
+            itensPedido.getProduto().getValorProduto(), (itensPedido.getProduto().getValorProduto()*itensPedido.getQuantidade())});
     }
     
     public static void removeCategoria(int select)
@@ -315,9 +302,9 @@ public class MontarTabelas
     {
         return ListaPedido;
     }
-
-    public static JTable getjTable_Tabelas()
+    
+    public static ArrayList<ItensPedido> getListaItensPedidos()
     {
-        return jTable_Tabelas;
+        return ListaItensPedidos;
     }
 }

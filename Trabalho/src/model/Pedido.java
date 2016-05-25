@@ -28,7 +28,7 @@ public class Pedido
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
     
-    @Column(name = "mesa", length = 3)
+    @Column(name = "mesa")
     private String mesa;
     
     @ManyToOne (fetch = FetchType.EAGER)

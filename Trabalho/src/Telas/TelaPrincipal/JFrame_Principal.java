@@ -1,6 +1,7 @@
 package Telas.TelaPrincipal;
 
 import Tabelas.MontarTabelas;
+import Tabelas.TabelaCategoria;
 import Telas.JFrame_Base;
 import Telas.Modal;
 import Telas.TelaCategoria.JFrame_AlterarCategoria;
@@ -18,6 +19,7 @@ import Telas.TelaProduto.JFrame_NovoProduto;
 import Telas.TelaProduto.JFrame_RemoverProduto;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,6 +29,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import model.Categoria;
 
 /**
  *
@@ -56,7 +60,8 @@ public class JFrame_Principal extends JFrame_Base
     
     private JScrollPane jScrollPane_BaseTabela;
     
-    private MontarTabelas tabela;
+    private JTable JTableAtual;
+    private ArrayList arrayList;
     
     private JMenuBar jMenuBar;
     
@@ -104,8 +109,6 @@ public class JFrame_Principal extends JFrame_Base
         jMenuItem_NovaCategoria = new JMenuItem();
         jMenuItem_NovoCliente = new JMenuItem();
         jMenuItem_NovoProduto = new JMenuItem();
-        
-        tabela = new MontarTabelas();
         
         //Icone de Botões
         Icon icone = new ImageIcon("src\\Imagens\\IconeCategoria.png");
@@ -236,7 +239,7 @@ public class JFrame_Principal extends JFrame_Base
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 if(CategoriaSelecionado)
-                    Modal(new JFrame_NovaCategoria());
+                    Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
                 if(ProdutoSelecionado)
                     Modal(new JFrame_NovoProduto());
                 if(ClienteSelecionado)
@@ -303,22 +306,22 @@ public class JFrame_Principal extends JFrame_Base
         });
         
         //Mouse Clicked
-        MontarTabelas.getjTable_Tabelas().addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                if(evt.getClickCount() == 2)
-                {
-                    if(CategoriaSelecionado)
-                        Alterar(CATEGORIA);
-                    if(ProdutoSelecionado)
-                        Alterar(PRODUTO);
-                    if(ClienteSelecionado)
-                        Alterar(CLIENTE);
-                }
-            }
-        });
+//        tabela.addMouseListener(new java.awt.event.MouseAdapter()
+//        {
+//            @Override
+//            public void mouseClicked(java.awt.event.MouseEvent evt)
+//            {
+//                if(evt.getClickCount() == 2)
+//                {
+//                    if(CategoriaSelecionado)
+//                        Alterar(CATEGORIA);
+//                    if(ProdutoSelecionado)
+//                        Alterar(PRODUTO);
+//                    if(ClienteSelecionado)
+//                        Alterar(CLIENTE);
+//                }
+//            }
+//        });
         
         //MenuBar
         //MenuSobre
@@ -345,7 +348,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                Modal(new JFrame_NovaCategoria());
+                Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
             }
         });
         jMenuItem_LocalizarCategoria.addActionListener(new java.awt.event.ActionListener()
@@ -423,7 +426,7 @@ public class JFrame_Principal extends JFrame_Base
     
     private int SelecionarTabela(boolean mostrar)
     {
-        int select = MontarTabelas.getjTable_Tabelas().getSelectedRow();
+        int select = JTableAtual.getSelectedRow();
         if (select == -1 && mostrar)
             JOptionPane.showMessageDialog(null, "Nunhum campo selecionado!", "Erro!", 2);
         
@@ -432,13 +435,10 @@ public class JFrame_Principal extends JFrame_Base
     
     private void Remover(int constante)
     {
-        int select = SelecionarTabela(true);
-        
-        if(select == -1)
-            return;
+        int select = SelecionarTabela(false);
         
         if(constante == CATEGORIA)
-            Modal(new JFrame_RemoverCategoria(select, MontarTabelas.getListaCategoria().get(select)));
+            Modal(new JFrame_RemoverCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
         
         if(constante == PRODUTO)
             Modal(new JFrame_RemoverProduto(select, MontarTabelas.getListaProduto().get(select)));
@@ -449,13 +449,10 @@ public class JFrame_Principal extends JFrame_Base
     
     private void Alterar(int constante)
     {
-        int select = SelecionarTabela(true);
-        
-        if(select == -1)
-            return;
+        int select = SelecionarTabela(false);
         
         if(constante == CATEGORIA)
-            Modal(new JFrame_AlterarCategoria(select, MontarTabelas.getListaCategoria().get(select)));
+            Modal(new JFrame_AlterarCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
         
         if(constante == PRODUTO)
             Modal(new JFrame_AlterarProduto(select, MontarTabelas.getListaProduto().get(select)));
@@ -468,7 +465,7 @@ public class JFrame_Principal extends JFrame_Base
     {
         int select = SelecionarTabela(false);
         if(constante == CATEGORIA)
-            Modal(new JFrame_LocalizarCategoria(select));
+            Modal(new JFrame_LocalizarCategoria(select, (TabelaCategoria) JTableAtual));
         
         if(constante == PRODUTO)
             Modal(new JFrame_LocalizarProduto(select));
@@ -484,7 +481,14 @@ public class JFrame_Principal extends JFrame_Base
             LimparTela();
         VisibilidadeBotoes(true);
         TelaSelecionada(constante);
-        jScrollPane_BaseTabela = new JScrollPane(MontarTabelas.getjTable_Tabelas());
+        if(constante == CATEGORIA)
+        {
+            TabelaCategoria tabelaCategoria = new TabelaCategoria();
+            arrayList = tabelaCategoria.getLista();
+            JTableAtual = tabelaCategoria;
+        }
+
+        jScrollPane_BaseTabela = new JScrollPane(JTableAtual);
         
         //Linha 1
         getGBC().gridy = 1;
