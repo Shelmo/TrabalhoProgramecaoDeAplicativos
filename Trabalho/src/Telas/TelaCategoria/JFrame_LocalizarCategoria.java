@@ -1,10 +1,8 @@
 package Telas.TelaCategoria;
 
 import Telas.JFrame_BaseLocalizar;
-import Tabelas.MontarTabelas;
 import Tabelas.TabelaCategoria;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 /**
  *
@@ -39,7 +37,7 @@ public class JFrame_LocalizarCategoria extends JFrame_BaseLocalizar
     {
         if(Verificaoes())
         {
-            if(tabelaCategoria.SelecionarLinhaTabela(select, 0, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
+            if(tabelaCategoria.selecionarLinhaTabela(select, 0, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
                 dispose();
             else
                 JOptionPane.showMessageDialog(this, "Categoria não encontrada!", "Erro!", 2);

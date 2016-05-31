@@ -43,7 +43,7 @@ public abstract class BaseTabela extends JTable
         model = (DefaultTableModel) getModel();
     }
     
-    public boolean SelecionarLinhaTabela(int inicio, int coluna, String Pesquisa, boolean pesquisarAbaixo)
+    public boolean selecionarLinhaTabela(int inicio, int coluna, String Pesquisa, boolean pesquisarAbaixo)
     {
         if(pesquisarAbaixo)
             inicio++;

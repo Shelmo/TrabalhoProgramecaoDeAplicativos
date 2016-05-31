@@ -1,6 +1,6 @@
 package Telas.TelaCliente;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCliente;
 import Telas.JFrame_BaseLocalizar;
 import javax.swing.JOptionPane;
 
@@ -11,12 +11,12 @@ import javax.swing.JOptionPane;
 public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
 {
     private final int select;
-    public JFrame_LocalizarCliente(int select)
+    private final TabelaCliente tabelaCliente;
+    public JFrame_LocalizarCliente(int select, TabelaCliente tabelaCliente)
     {
         super("src\\Imagens\\TelaCliente.jpg");
         this.select = select;
-        
-        
+        this.tabelaCliente = tabelaCliente;
         
         getjCheckBox1().setText("Localizar por Nome");
         getjCheckBox2().setText("Localizar por CPF");
@@ -59,7 +59,7 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
                 coluna = 1;
             }
 
-            if(MontarTabelas.SelecionarLinhaTabela(select, coluna, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
+            if(tabelaCliente.selecionarLinhaTabela(select, coluna, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
                 dispose();
             else
                 JOptionPane.showMessageDialog(this, "Cliente não encontrado!", "Erro!", 2);

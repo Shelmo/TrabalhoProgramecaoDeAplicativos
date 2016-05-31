@@ -1,6 +1,7 @@
 package Telas.TelaPedido;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaItensPedido;
+import Tabelas.TabelaPedido;
 import dao.DAO_Generalizado;
 import java.util.Date;
 import model.Cliente;
@@ -14,27 +15,29 @@ import model.Produto;
  */
 public class JFrame_NovoPedido extends JFrame_Pedido
 {
-    public JFrame_NovoPedido()
+
+    private final TabelaPedido tabelaPedido;
+
+    public JFrame_NovoPedido(TabelaPedido tabelaPedido)
     {
         super("");
+        this.tabelaPedido = tabelaPedido;
+        
         getjLabel_Titulo().setText("Novo Pedido");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");
-        getjButton_Add().addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                LimparErros();
-                if(VerificarProduto())
+        getjButton_Add().addActionListener((java.awt.event.ActionEvent evt)
+                -> 
                 {
-                    ItensPedido itensPedido = new ItensPedido();
-                    itensPedido.setProduto((Produto) getjComboBox_Produto().getSelectedItem());
-                    itensPedido.setQuantidade((int) getjSpinner_Quantidade().getValue());
-                    MontarTabelas.addItemPedido(itensPedido);
-                    getjComboBox_Produto().setSelectedIndex(0);
-                }
-            }
+                    LimparErros();
+                    if (VerificarProduto())
+                    {
+                        ItensPedido itensPedido = new ItensPedido();
+                        itensPedido.setProduto((Produto) getjComboBox_Produto().getSelectedItem());
+                        itensPedido.setQuantidade((int) getjSpinner_Quantidade().getValue());
+                        getTabelaItensPedido().Add(itensPedido);
+                        getjComboBox_Produto().setSelectedIndex(0);
+                    }
         });
     }
 
@@ -42,7 +45,7 @@ public class JFrame_NovoPedido extends JFrame_Pedido
     public void Confirmar()
     {
         LimparErros();
-        if(Verificacoes())
+        if (Verificacoes())
         {
             Pedido pedido = new Pedido();
             Date data = new Date();
@@ -51,16 +54,21 @@ public class JFrame_NovoPedido extends JFrame_Pedido
             pedido.setDataCadastro(data);
             int index = (int) DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.SALVAR);
             pedido.setIdPedido(index);
-            MontarTabelas.addPedido(pedido);
+            tabelaPedido.Add(pedido);
 
-            for(ItensPedido ip : MontarTabelas.getListaItensPedidos())
-            {
-                ip.setPedido(pedido);
-                DAO_Generalizado.incluirAlterar(ip, DAO_Generalizado.SALVAR);
-            }
+            getTabelaItensPedido().getLista().stream().map((ip)
+                    -> 
+                    {
+                        ip.setPedido(pedido);
+                        return ip;
+            }).forEach((ip)
+                    -> 
+                    {
+                        DAO_Generalizado.incluirAlterar(ip, DAO_Generalizado.SALVAR);
+            });
 
             LimparCampos();
         }
     }
-    
+
 }

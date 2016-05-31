@@ -1,6 +1,6 @@
 package Telas.TelaCliente;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCliente;
 import dao.DAO_Generalizado;
 import java.sql.Date;
 import java.text.ParseException;
@@ -15,12 +15,14 @@ public class JFrame_AlterarCliente extends JFrame_Cliente
 {
     private final Cliente cliente;
     private final int select;
+    private final TabelaCliente tabelaCliente;
     
-    public JFrame_AlterarCliente(int select, Cliente cliente)
+    public JFrame_AlterarCliente(int select, Cliente cliente, TabelaCliente tabelaCliente)
     {
         super();
         this.cliente = cliente;
         this.select = select;
+        this.tabelaCliente = tabelaCliente;
         
         getjLabel_Titulo().setText("Alterar Cliente");
         getjLabel_Aviso().setText("Alterações não salvas serão perdidas!");
@@ -77,7 +79,7 @@ public class JFrame_AlterarCliente extends JFrame_Cliente
             catch (ParseException ex){}
             
             DAO_Generalizado.incluirAlterar(cliente, DAO_Generalizado.ATUALIZAR);
-            MontarTabelas.updateCliente(select, cliente);
+            tabelaCliente.update(cliente, select);
             dispose();
         }
     }

@@ -1,6 +1,6 @@
 package Telas.TelaProduto;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaProduto;
 import dao.DAO_Generalizado;
 import model.Produto;
 
@@ -12,17 +12,19 @@ public class JFrame_RemoverProduto extends JFrame_Produto
 {
     private final Produto produto;
     private final int select;
-    public JFrame_RemoverProduto(int select, Produto produto)
+    private final TabelaProduto tabelaProduto;
+    public JFrame_RemoverProduto(int select, Produto produto, TabelaProduto tabelaProduto)
     {
         super();
         this.produto = produto;
         this.select = select;
+        this.tabelaProduto = tabelaProduto;
         
         getjLabel_Titulo().setText("Remover Produto");
         getjLabel_Aviso().setText("Deseja realmente remover esse Produto?");
         getjButton_Confirmar().setText("Remover");
         
-        getjComboBox_Categoria().setSelectedIndex(select+1);
+        //getjComboBox_Categoria().setSelectedIndex(select+1);
         getjTextField_Nome().setText(this.produto.getNomeProduto());
         String valor = String.valueOf(String.format("%.2f", this.produto.getValorProduto())).replace(",", "");
         getjTextField_Valor().setText(valor);
@@ -38,7 +40,7 @@ public class JFrame_RemoverProduto extends JFrame_Produto
     public void Confirmar()
     {
         DAO_Generalizado.remover(produto);
-        MontarTabelas.removeProduto(select);
+        tabelaProduto.Remove(select);
         dispose();
     }
 }

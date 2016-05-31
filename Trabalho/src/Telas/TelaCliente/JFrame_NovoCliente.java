@@ -1,6 +1,6 @@
 package Telas.TelaCliente;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCliente;
 import dao.DAO_Generalizado;
 import java.sql.Date;
 import java.text.ParseException;
@@ -13,9 +13,12 @@ import model.Cliente;
  */
 public class JFrame_NovoCliente extends JFrame_Cliente
 {
-    public JFrame_NovoCliente()
+    private final TabelaCliente tabelaCliente;
+    
+    public JFrame_NovoCliente(TabelaCliente tabelaCliente)
     {
         super();
+        this.tabelaCliente = tabelaCliente;
         getjLabel_Titulo().setText("Novo Cliente");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");
@@ -57,7 +60,7 @@ public class JFrame_NovoCliente extends JFrame_Cliente
             
             int id = (int) DAO_Generalizado.incluirAlterar(cliente, DAO_Generalizado.SALVAR);
             cliente.setIdCliente(id);
-            MontarTabelas.addCliente(cliente);
+            tabelaCliente.Add(cliente);
             LimparCampos();
         }
     }

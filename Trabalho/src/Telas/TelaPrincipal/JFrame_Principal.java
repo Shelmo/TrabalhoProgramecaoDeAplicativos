@@ -1,7 +1,9 @@
 package Telas.TelaPrincipal;
 
-import Tabelas.MontarTabelas;
 import Tabelas.TabelaCategoria;
+import Tabelas.TabelaCliente;
+import Tabelas.TabelaPedido;
+import Tabelas.TabelaProduto;
 import Telas.JFrame_Base;
 import Telas.Modal;
 import Telas.TelaCategoria.JFrame_AlterarCategoria;
@@ -31,6 +33,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import model.Categoria;
+import model.Cliente;
+import model.Produto;
 
 /**
  *
@@ -38,16 +42,17 @@ import model.Categoria;
  */
 public class JFrame_Principal extends JFrame_Base
 {
+
     private boolean CategoriaSelecionado;
     private boolean ProdutoSelecionado;
     private boolean ClienteSelecionado;
     private boolean PedidoSelecionado;
-    
+
     private final int CATEGORIA = 0;
     private final int PRODUTO = 1;
     private final int CLIENTE = 2;
     private final int PEDIDO = 3;
-    
+
     private JButton jButton_Categoria;
     private JButton jButton_Produto;
     private JButton jButton_Cliente;
@@ -57,26 +62,26 @@ public class JFrame_Principal extends JFrame_Base
     private JButton jButton_Update;
     private JButton jButton_Search;
     private JButton jButton_Close;
-    
+
     private JScrollPane jScrollPane_BaseTabela;
-    
+
     private JTable JTableAtual;
     private ArrayList arrayList;
-    
+
     private JMenuBar jMenuBar;
-    
+
     private JMenu jMenu_Categoria;
     private JMenu jMenu_Produto;
     private JMenu jMenu_Cliente;
     private JMenu jMenu_Sobre;
-    
+
     private JMenuItem jMenuItem_NovaCategoria;
     private JMenuItem jMenuItem_LocalizarCategoria;
     private JMenuItem jMenuItem_NovoProduto;
     private JMenuItem jMenuItem_LocalizarProduto;
     private JMenuItem jMenuItem_NovoCliente;
     private JMenuItem jMenuItem_LocalizarCliente;
-    
+
     public JFrame_Principal()
     {
         super("src\\Imagens\\TelaPrincipal.jpg");
@@ -84,7 +89,7 @@ public class JFrame_Principal extends JFrame_Base
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
     }
-    
+
     public void Componentes()
     {
         //Criar componentes
@@ -97,7 +102,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
         jButton_Update = new JButton();
-        
+
         jMenuBar = new JMenuBar();
         jMenu_Categoria = new JMenu();
         jMenu_Cliente = new JMenu();
@@ -109,7 +114,7 @@ public class JFrame_Principal extends JFrame_Base
         jMenuItem_NovaCategoria = new JMenuItem();
         jMenuItem_NovoCliente = new JMenuItem();
         jMenuItem_NovoProduto = new JMenuItem();
-        
+
         //Icone de Botões
         Icon icone = new ImageIcon("src\\Imagens\\IconeCategoria.png");
         jButton_Categoria.setIcon(icone);
@@ -132,7 +137,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Search.setIcon(icone);
         icone = new ImageIcon("src\\Imagens\\update.png");
         jButton_Update.setIcon(icone);
-        
+
         //Texto e formatações
         jMenu_Categoria.setText("Categorias");
         jMenu_Produto.setText("Produtos");
@@ -144,36 +149,36 @@ public class JFrame_Principal extends JFrame_Base
         jMenuItem_LocalizarProduto.setText("Localizar Produto");
         jMenuItem_NovoCliente.setText("Novo Cliente");
         jMenuItem_LocalizarCliente.setText("Localizar Cliente");
-        
+
         jMenu_Categoria.add(jMenuItem_NovaCategoria);
         jMenu_Categoria.add(jMenuItem_LocalizarCategoria);
         jMenu_Produto.add(jMenuItem_NovoProduto);
         jMenu_Produto.add(jMenuItem_LocalizarProduto);
         jMenu_Cliente.add(jMenuItem_NovoCliente);
         jMenu_Cliente.add(jMenuItem_LocalizarCliente);
-        
+
         jMenuBar.add(jMenu_Categoria);
         jMenuBar.add(jMenu_Produto);
         jMenuBar.add(jMenu_Cliente);
         jMenuBar.add(jMenu_Sobre);
-        
+
         //Componentes não mostrados
         getjLabel_Titulo().setVisible(false);
         getjButton_Confirmar().setVisible(false);
         VisibilidadeBotoes(false);
-        
+
         //Painel Norte
         getjPanel_NORTH_WEST().add(jMenuBar);
         getjPanel_NORTH_CENTER().add(jButton_Categoria);
         getjPanel_NORTH_CENTER().add(jButton_Produto);
         getjPanel_NORTH_CENTER().add(jButton_Cliente);
         getjPanel_NORTH_CENTER().add(jButton_Pedido);
-        
+
         //Painel Central
         getGBC().fill = GridBagConstraints.NONE;
         getGBC().anchor = GridBagConstraints.NORTHEAST;
         getGBC().insets = new Insets(10, 10, 10, 10);
-        
+
         //Linha 0
         getGBC().gridwidth = 1;
         getGBC().gridheight = 1;
@@ -190,121 +195,119 @@ public class JFrame_Principal extends JFrame_Base
         getjPanel_CENTER().add(jButton_Search, getGBC());
         getGBC().gridx = 4;
         getjPanel_CENTER().add(jButton_Close, getGBC());
-        
+
         //Ações de botões
         //Botão Categoria
-        jButton_Categoria.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                TrocaTela(CATEGORIA);
-            }
+        jButton_Categoria.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    TrocaTela(CATEGORIA);
         });
-        
+
         //Botão Produtos
-        jButton_Produto.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                TrocaTela(PRODUTO);
-            }
+        jButton_Produto.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    TrocaTela(PRODUTO);
         });
-        
+
         //Botão Cliente
-        jButton_Cliente.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                TrocaTela(CLIENTE);
-            }
+        jButton_Cliente.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    TrocaTela(CLIENTE);
         });
-        
+
         //Botão Pedido
-        jButton_Pedido.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                TrocaTela(PEDIDO);
-            }
+        jButton_Pedido.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    TrocaTela(PEDIDO);
         });
-        
+
         //Botão Adicionar
-        jButton_Add.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                if(CategoriaSelecionado)
-                    Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
-                if(ProdutoSelecionado)
-                    Modal(new JFrame_NovoProduto());
-                if(ClienteSelecionado)
-                    Modal(new JFrame_NovoCliente());
-                if(PedidoSelecionado)
-                    Modal(new JFrame_NovoPedido());
-                
-            }
+        jButton_Add.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    if (CategoriaSelecionado)
+                    {
+                        Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
+                    }
+                    if (ProdutoSelecionado)
+                    {
+                        Modal(new JFrame_NovoProduto((TabelaProduto) JTableAtual));
+                    }
+                    if (ClienteSelecionado)
+                    {
+                        Modal(new JFrame_NovoCliente((TabelaCliente) JTableAtual));
+                    }
+                    if (PedidoSelecionado)
+                    {
+                        Modal(new JFrame_NovoPedido((TabelaPedido) JTableAtual));
+                    }
         });
-        
+
         //Botão Remover
-        jButton_Remove.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                if(CategoriaSelecionado)
-                    Remover(CATEGORIA);
-                if(ProdutoSelecionado)
-                    Remover(PRODUTO);
-                if(ClienteSelecionado)
-                    Remover(CLIENTE);
-            }
+        jButton_Remove.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    if (CategoriaSelecionado)
+                    {
+                        Remover(CATEGORIA);
+                    }
+                    if (ProdutoSelecionado)
+                    {
+                        Remover(PRODUTO);
+                    }
+                    if (ClienteSelecionado)
+                    {
+                        Remover(CLIENTE);
+                    }
         });
-        
+
         //Botão Alterar
-        jButton_Update.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                if(CategoriaSelecionado)
-                    Alterar(CATEGORIA);
-                if(ProdutoSelecionado)
-                    Alterar(PRODUTO);
-                if(ClienteSelecionado)
-                    Alterar(CLIENTE);
-            }
+        jButton_Update.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    if (CategoriaSelecionado)
+                    {
+                        Alterar(CATEGORIA);
+                    }
+                    if (ProdutoSelecionado)
+                    {
+                        Alterar(PRODUTO);
+                    }
+                    if (ClienteSelecionado)
+                    {
+                        Alterar(CLIENTE);
+                    }
         });
-        
+
         //Botão Pesquisar
-        jButton_Search.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                if(CategoriaSelecionado)
-                    Localizar(CATEGORIA);
-                if(ProdutoSelecionado)
-                    Localizar(PRODUTO);
-                if(ClienteSelecionado)
-                    Localizar(CLIENTE);
-            }
+        jButton_Search.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    if (CategoriaSelecionado)
+                    {
+                        Localizar(CATEGORIA);
+                    }
+                    if (ProdutoSelecionado)
+                    {
+                        Localizar(PRODUTO);
+                    }
+                    if (ClienteSelecionado)
+                    {
+                        Localizar(CLIENTE);
+                    }
         });
-        
+
         //Botão Close
-        jButton_Close.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                LimparTela();
-            }
+        jButton_Close.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    LimparTela();
         });
-        
+
         //Mouse Clicked
 //        tabela.addMouseListener(new java.awt.event.MouseAdapter()
 //        {
@@ -322,7 +325,6 @@ public class JFrame_Principal extends JFrame_Base
 //                }
 //            }
 //        });
-        
         //MenuBar
         //MenuSobre
         jMenu_Sobre.addMouseListener(new java.awt.event.MouseAdapter()
@@ -330,7 +332,7 @@ public class JFrame_Principal extends JFrame_Base
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt)
             {
-                JOptionPane.showMessageDialog(getjPanel_CENTER(), "Teabalho de Programação de Aplicativos\n"
+                JOptionPane.showMessageDialog(getjPanel_CENTER(), "Trabalho de Programação de Aplicativos\n"
                         + "Acadêmico: Shelmo Lucas Baches", "Sobre", 3);
             }
         });
@@ -343,23 +345,18 @@ public class JFrame_Principal extends JFrame_Base
                 TrocaTela(CATEGORIA);
             }
         });
-        jMenuItem_NovaCategoria.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
-            }
+        jMenuItem_NovaCategoria.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
         });
-        jMenuItem_LocalizarCategoria.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Localizar(CATEGORIA);
-            }
+
+        jMenuItem_LocalizarCategoria.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Localizar(CATEGORIA);
         });
-        
+
         //MenuProduto
         jMenu_Produto.addMouseListener(new java.awt.event.MouseAdapter()
         {
@@ -369,21 +366,17 @@ public class JFrame_Principal extends JFrame_Base
                 TrocaTela(PRODUTO);
             }
         });
-        jMenuItem_NovoProduto.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Modal(new JFrame_NovoProduto());
-            }
+
+        jMenuItem_NovoProduto.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Modal(new JFrame_NovoProduto((TabelaProduto) JTableAtual));
         });
-        jMenuItem_LocalizarProduto.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Localizar(PRODUTO);
-            }
+
+        jMenuItem_LocalizarProduto.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Localizar(PRODUTO);
         });
         //MenuCliente
         jMenu_Cliente.addMouseListener(new java.awt.event.MouseAdapter()
@@ -394,113 +387,155 @@ public class JFrame_Principal extends JFrame_Base
                 TrocaTela(CLIENTE);
             }
         });
-        jMenuItem_NovoCliente.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Modal(new JFrame_NovoCliente());
-            }
+
+        jMenuItem_NovoCliente.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Modal(new JFrame_NovoCliente((TabelaCliente) JTableAtual));
         });
-        jMenuItem_LocalizarCliente.addActionListener(new java.awt.event.ActionListener()
-        {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                Localizar(CLIENTE);
-            }
+
+        jMenuItem_LocalizarCliente.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Localizar(CLIENTE);
         });
     }
-    
+
     private void TrocaTela(int constante)
     {
-        if(constante == CATEGORIA)
+        if (constante == CATEGORIA)
+        {
             MontarJPanelCentral(CATEGORIA);
-        if(constante == PRODUTO)
+        }
+        if (constante == PRODUTO)
+        {
             MontarJPanelCentral(PRODUTO);
-        if(constante == CLIENTE)
+        }
+        if (constante == CLIENTE)
+        {
             MontarJPanelCentral(CLIENTE);
-        if(constante == PEDIDO)
+        }
+        if (constante == PEDIDO)
+        {
             MontarJPanelCentral(PEDIDO);
+        }
     }
-    
+
     private int SelecionarTabela(boolean mostrar)
     {
         int select = JTableAtual.getSelectedRow();
         if (select == -1 && mostrar)
+        {
             JOptionPane.showMessageDialog(null, "Nunhum campo selecionado!", "Erro!", 2);
-        
+        }
+
         return select;
     }
-    
+
     private void Remover(int constante)
     {
-        int select = SelecionarTabela(false);
-        
-        if(constante == CATEGORIA)
+        int select = SelecionarTabela(true);
+
+        if (constante == CATEGORIA)
+        {
             Modal(new JFrame_RemoverCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
-        
-        if(constante == PRODUTO)
-            Modal(new JFrame_RemoverProduto(select, MontarTabelas.getListaProduto().get(select)));
-        
+        }
+
+        if (constante == PRODUTO)
+        {
+            Modal(new JFrame_RemoverProduto(select, (Produto) arrayList.get(select), (TabelaProduto) JTableAtual));
+        }
+
         if(constante == CLIENTE)
-            Modal(new JFrame_RemoverCliente(select, MontarTabelas.getListaCliente().get(select)));
+            Modal(new JFrame_RemoverCliente(select, (Cliente) arrayList.get(select), (TabelaCliente) JTableAtual));
     }
-    
+
     private void Alterar(int constante)
     {
-        int select = SelecionarTabela(false);
-        
-        if(constante == CATEGORIA)
+        int select = SelecionarTabela(true);
+
+        if (constante == CATEGORIA)
+        {
             Modal(new JFrame_AlterarCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
-        
-        if(constante == PRODUTO)
-            Modal(new JFrame_AlterarProduto(select, MontarTabelas.getListaProduto().get(select)));
-        
+        }
+
+        if (constante == PRODUTO)
+        {
+            Modal(new JFrame_AlterarProduto(select, (Produto) arrayList.get(select), (TabelaProduto) JTableAtual));
+        }
+
         if(constante == CLIENTE)
-            Modal(new JFrame_AlterarCliente(select, MontarTabelas.getListaCliente().get(select)));
+            Modal(new JFrame_AlterarCliente(select, (Cliente) arrayList.get(select), (TabelaCliente) JTableAtual));
     }
-    
+
     private void Localizar(int constante)
     {
         int select = SelecionarTabela(false);
-        if(constante == CATEGORIA)
+        if (constante == CATEGORIA)
+        {
             Modal(new JFrame_LocalizarCategoria(select, (TabelaCategoria) JTableAtual));
-        
-        if(constante == PRODUTO)
-            Modal(new JFrame_LocalizarProduto(select));
-        
-        if(constante == CLIENTE)
-            Modal(new JFrame_LocalizarCliente(select));
+        }
+
+        if (constante == PRODUTO)
+        {
+            Modal(new JFrame_LocalizarProduto(select, (TabelaProduto) JTableAtual));
+        }
+
+        if (constante == CLIENTE)
+        {
+            Modal(new JFrame_LocalizarCliente(select, (TabelaCliente) JTableAtual));
+        }
     }
-    
+
     private void MontarJPanelCentral(int constante)
     {
-        MontarTabelas.SelecionarTabela(constante);
-        if(jScrollPane_BaseTabela != null)
+        if (jScrollPane_BaseTabela != null)
+        {
             LimparTela();
+        }
         VisibilidadeBotoes(true);
         TelaSelecionada(constante);
-        if(constante == CATEGORIA)
+        if (constante == CATEGORIA)
         {
             TabelaCategoria tabelaCategoria = new TabelaCategoria();
             arrayList = tabelaCategoria.getLista();
             JTableAtual = tabelaCategoria;
         }
 
-        jScrollPane_BaseTabela = new JScrollPane(JTableAtual);
+        if (constante == PRODUTO)
+        {
+            TabelaProduto tabelaProduto = new TabelaProduto();
+            arrayList = tabelaProduto.getLista();
+            JTableAtual = tabelaProduto;
+        }
+
+        if (constante == CLIENTE)
+        {
+            TabelaCliente tabelaCliente = new TabelaCliente();
+            arrayList = tabelaCliente.getLista();
+            JTableAtual = tabelaCliente;
+        }
         
+        if(constante == PEDIDO)
+        {
+            TabelaPedido tabelaPedido = new TabelaPedido();
+            arrayList = tabelaPedido.getLista();
+            JTableAtual = tabelaPedido;
+        }
+
+        jScrollPane_BaseTabela = new JScrollPane(JTableAtual);
+
         //Linha 1
         getGBC().gridy = 1;
         getGBC().gridx = 0;
         getGBC().fill = GridBagConstraints.BOTH;
-        getGBC().weightx = 1;  
+        getGBC().weightx = 1;
         getGBC().gridwidth = GridBagConstraints.REMAINDER;
-        getGBC().weighty = 1;  
-        getGBC().gridheight = GridBagConstraints.REMAINDER;  
+        getGBC().weighty = 1;
+        getGBC().gridheight = GridBagConstraints.REMAINDER;
         getjPanel_CENTER().add(jScrollPane_BaseTabela, getGBC());
     }
-    
+
     private void VisibilidadeBotoes(boolean visivel)
     {
         jButton_Add.setVisible(visivel);
@@ -509,51 +544,58 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Search.setVisible(visivel);
         jButton_Update.setVisible(visivel);
     }
-    
+
     private void LimparTela()
     {
         TelaSelecionada(-1);
         VisibilidadeBotoes(false);
         jScrollPane_BaseTabela.setVisible(false);
     }
-    
+
     private void TelaSelecionada(int constante)
     {
         CategoriaSelecionado = false;
         ProdutoSelecionado = false;
         ClienteSelecionado = false;
         PedidoSelecionado = false;
-        
-        if(constante == CATEGORIA)
+
+        if (constante == CATEGORIA)
+        {
             CategoriaSelecionado = true;
-        
-        if(constante == PRODUTO)
+        }
+
+        if (constante == PRODUTO)
+        {
             ProdutoSelecionado = true;
-        
-        if(constante == CLIENTE)
+        }
+
+        if (constante == CLIENTE)
+        {
             ClienteSelecionado = true;
-        
-        if(constante == PEDIDO)
+        }
+
+        if (constante == PEDIDO)
+        {
             PedidoSelecionado = true;
+        }
     }
-    
+
     private void Modal(JFrame jFrame)
     {
         Modal.showAsModal(jFrame, this);
     }
-    
+
     @Override
-    public void Confirmar(){/*Não utilizada para classe principal*/}
-    
+    public void Confirmar()
+    {/*Não utilizada para classe principal*/
+    }
+
     public static void main(String args[])
     {
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                new JFrame_Principal();
-            }
+        java.awt.EventQueue.invokeLater(()
+                -> 
+                {
+                    new JFrame_Principal();
         });
     }
 }

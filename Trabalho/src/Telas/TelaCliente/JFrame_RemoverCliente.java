@@ -1,6 +1,6 @@
 package Telas.TelaCliente;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCliente;
 import dao.DAO_Generalizado;
 import java.text.SimpleDateFormat;
 import model.Cliente;
@@ -13,12 +13,14 @@ public class JFrame_RemoverCliente extends JFrame_Cliente
 {
     private final Cliente cliente;
     private final int select;
+    private final TabelaCliente tabelaCliente;
     
-    public JFrame_RemoverCliente(int select, Cliente cliente)
+    public JFrame_RemoverCliente(int select, Cliente cliente, TabelaCliente tabelaCliente)
     {
         super();
         this.cliente = cliente;
         this.select = select;
+        this.tabelaCliente = tabelaCliente;
         
         getjLabel_Titulo().setText("Remover Cliente");
         getjLabel_Aviso().setText("Deseja realmente remover esse Cliente?");
@@ -60,7 +62,7 @@ public class JFrame_RemoverCliente extends JFrame_Cliente
     public void Confirmar()
     {
         DAO_Generalizado.remover(cliente);
-        MontarTabelas.removeCliente(select);
+        tabelaCliente.Remove(select);
         dispose();
     }
 }

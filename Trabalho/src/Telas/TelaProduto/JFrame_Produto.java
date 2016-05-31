@@ -1,6 +1,6 @@
 package Telas.TelaProduto;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCategoria;
 import Telas.JFrame_Base;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import model.Categoria;
 
 /**
  *
@@ -69,8 +68,10 @@ public abstract class JFrame_Produto extends JFrame_Base
         
         //Carregar ComboBox
         jComboBox_Categoria.addItem("---SELECIONE---");
-        for(Categoria c : MontarTabelas.getListaCategoria())
+        new TabelaCategoria().getLista().stream().forEach((c) ->
+        {
             jComboBox_Categoria.addItem(c);
+        });
         
         //Posicionar Componentes
         getGBC().fill = GridBagConstraints.NONE;

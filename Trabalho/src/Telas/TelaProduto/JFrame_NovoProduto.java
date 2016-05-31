@@ -1,6 +1,6 @@
 package Telas.TelaProduto;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaProduto;
 import dao.DAO_Generalizado;
 import model.Categoria;
 import model.Produto;
@@ -11,9 +11,14 @@ import model.Produto;
  */
 public class JFrame_NovoProduto extends JFrame_Produto
 {
-    public JFrame_NovoProduto()
+    private final TabelaProduto tabelaProduto;
+    
+    public JFrame_NovoProduto(TabelaProduto tabelaProduto)
     {
         super();
+        
+        this.tabelaProduto = tabelaProduto;
+        
         getjLabel_Titulo().setText("Novo Produto");
         getjLabel_Aviso().setText("(*) Campos obrigatórios!");
         getjButton_Confirmar().setText("Salvar");
@@ -34,7 +39,7 @@ public class JFrame_NovoProduto extends JFrame_Produto
             produto.setDescricaoProduto(getjTextArea_Descricao().getText());
             int id = (int) DAO_Generalizado.incluirAlterar(produto, DAO_Generalizado.SALVAR);
             produto.setIdProduto(id);
-            MontarTabelas.addProduto(produto);
+            tabelaProduto.Add(produto);
             LimparCampos();
         }
     }

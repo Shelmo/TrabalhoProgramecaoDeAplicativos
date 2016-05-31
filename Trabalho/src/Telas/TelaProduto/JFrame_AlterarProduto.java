@@ -1,6 +1,6 @@
 package Telas.TelaProduto;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaProduto;
 import dao.DAO_Generalizado;
 import model.Categoria;
 import model.Produto;
@@ -13,12 +13,14 @@ public class JFrame_AlterarProduto extends JFrame_Produto
 {
     private final Produto produto;
     private final int select;
+    private final TabelaProduto tabelaProduto;
     
-    public JFrame_AlterarProduto(int select, Produto produto)
+    public JFrame_AlterarProduto(int select, Produto produto, TabelaProduto tabelaProduto)
     {
         super();
         this.produto = produto;
         this.select = select;
+        this.tabelaProduto = tabelaProduto;
         
         getjLabel_Titulo().setText("Alterar Produto");
         getjLabel_Aviso().setText("Alterações não salvas serão perdidas!");
@@ -44,7 +46,7 @@ public class JFrame_AlterarProduto extends JFrame_Produto
             produto.setValorProduto(Double.parseDouble(valor));
             produto.setDescricaoProduto(getjTextArea_Descricao().getText());
             DAO_Generalizado.incluirAlterar(produto, DAO_Generalizado.ATUALIZAR);
-            MontarTabelas.updateProduto(select, produto);
+            tabelaProduto.update(produto, select);
             dispose();
         }
     }

@@ -1,6 +1,8 @@
 package Telas.TelaPedido;
 
-import Tabelas.MontarTabelas;
+import Tabelas.TabelaCliente;
+import Tabelas.TabelaItensPedido;
+import Tabelas.TabelaProduto;
 import Telas.JFrame_Base;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -42,6 +44,8 @@ public abstract class JFrame_Pedido extends JFrame_Base
     
     private JScrollPane jScrollPane_TabelaItensPedido;
     
+    private TabelaItensPedido tabelaItensPedido;
+    
     public JFrame_Pedido(String image)
     {
         super(image);
@@ -74,7 +78,9 @@ public abstract class JFrame_Pedido extends JFrame_Base
         
         jSpinner_Quantidade = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
         
-        jScrollPane_TabelaItensPedido = new JScrollPane(MontarTabelas.TabelaItensPedidos());
+        tabelaItensPedido = new TabelaItensPedido();
+        
+        jScrollPane_TabelaItensPedido = new JScrollPane(tabelaItensPedido);
         
         //Icone de Botões
         Icon icone = new ImageIcon("src\\Imagens\\ItensAdd.png");
@@ -102,11 +108,12 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jComboBox_Cliente.addItem("---SELECIONE---");
         jComboBox_Mesa.addItem("---SELECIONE---");
         jComboBox_Produto.addItem("---SELECIONE---");
-        MontarTabelas.getListaProduto().stream().forEach((p) ->
+        
+        new TabelaProduto().getLista().stream().forEach((p) ->
         {
             jComboBox_Produto.addItem(p);
         });
-        MontarTabelas.getListaCliente().stream().forEach((c) ->
+        new TabelaCliente().getLista().stream().forEach((c) ->
         {
             jComboBox_Cliente.addItem(c);
         });
@@ -223,7 +230,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
             retorno = false;
         }
         
-        if(MontarTabelas.getListaItensPedidos().isEmpty())
+        if(tabelaItensPedido.getLista().isEmpty())
         {
             jLabel_ErroProduto.setText("Nenhum item foi associado ao pedido!");
             retorno = false;
@@ -244,7 +251,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jComboBox_Cliente.setSelectedIndex(0);
         jComboBox_Mesa.setSelectedIndex(0);
         jComboBox_Produto.setSelectedIndex(0);
-        MontarTabelas.getListaItensPedidos().clear();
+        tabelaItensPedido.getLista().clear();
     }
 
     public JComboBox getjComboBox_Cliente()
@@ -280,5 +287,10 @@ public abstract class JFrame_Pedido extends JFrame_Base
     public JSpinner getjSpinner_Quantidade()
     {
         return jSpinner_Quantidade;
+    }
+
+    public TabelaItensPedido getTabelaItensPedido()
+    {
+        return tabelaItensPedido;
     }
 }
