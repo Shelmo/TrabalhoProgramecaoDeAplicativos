@@ -37,7 +37,7 @@ public class TabelaProduto extends BaseTabela
                         {
                             getModelo().addRow(new Object[]
                             {
-                                p.getCategoria(), p.getNomeProduto(), valor(p.getValorProduto()), p.getDescricaoProduto()
+                                p.getCategoria().getNomeCategoria(), p.getNomeProduto(), valor(p.getValorProduto()), p.getDescricaoProduto()
                             });
                 });
             }
@@ -60,8 +60,9 @@ public class TabelaProduto extends BaseTabela
         listaProduto.add(p);
         getModelo().addRow(new Object[]
         {
-            p.getCategoria(), p.getNomeProduto(), valor(p.getValorProduto()), p.getDescricaoProduto()
+            p.getCategoria().getNomeCategoria(), p.getNomeProduto(), valor(p.getValorProduto()), p.getDescricaoProduto()
         });
+        System.out.println(getModelo().getValueAt(0, 1));
     }
 
     @Override

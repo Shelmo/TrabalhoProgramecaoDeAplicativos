@@ -26,7 +26,7 @@ public class JFrame_AlterarProduto extends JFrame_Produto
         getjLabel_Aviso().setText("Alterações não salvas serão perdidas!");
         getjButton_Confirmar().setText("Alterar");
         
-        getjComboBox_Categoria().setSelectedIndex(select+1);
+        getjComboBox_Categoria().setSelectedItem(this.produto.getCategoria());
         getjTextField_Nome().setText(this.produto.getNomeProduto());
         String valor = String.valueOf(String.format("%.2f", this.produto.getValorProduto())).replace(",", "");
         getjTextField_Valor().setText(valor);

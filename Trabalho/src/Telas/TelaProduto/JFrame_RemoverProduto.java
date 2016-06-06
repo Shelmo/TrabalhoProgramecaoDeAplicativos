@@ -24,7 +24,7 @@ public class JFrame_RemoverProduto extends JFrame_Produto
         getjLabel_Aviso().setText("Deseja realmente remover esse Produto?");
         getjButton_Confirmar().setText("Remover");
         
-        //getjComboBox_Categoria().setSelectedIndex(select+1);
+        getjComboBox_Categoria().setSelectedIndex(select+1);
         getjTextField_Nome().setText(this.produto.getNomeProduto());
         String valor = String.valueOf(String.format("%.2f", this.produto.getValorProduto())).replace(",", "");
         getjTextField_Valor().setText(valor);

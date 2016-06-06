@@ -48,7 +48,7 @@ public class TabelaItensPedido extends BaseTabela
         getModelo().addRow(new Object[]
         {
             ip.getProduto().getCategoria().getNomeCategoria(), ip.getProduto().getNomeProduto(),
-            ip.getQuantidade(), ip.getProduto().getValorProduto(), (ip.getQuantidade() * ip.getProduto().getValorProduto())
+            ip.getQuantidade(), valor(ip.getProduto().getValorProduto()), valor((ip.getQuantidade() * ip.getProduto().getValorProduto()))
         });
     }
 
@@ -63,6 +63,12 @@ public class TabelaItensPedido extends BaseTabela
     public void update(Object object, int select)
     {
         /*Não utilizada nessa Classe*/
+    }
+    
+    public void clearTable()
+    {
+        listaItensPedido.clear();
+        TabelaCategoria();
     }
 
     @Override

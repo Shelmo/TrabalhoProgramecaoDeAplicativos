@@ -18,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class BaseTabela extends JTable
 {
-    private static DefaultTableModel model;
     
     public BaseTabela()
     {
@@ -40,7 +39,6 @@ public abstract class BaseTabela extends JTable
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         });
-        model = (DefaultTableModel) getModel();
     }
     
     public boolean selecionarLinhaTabela(int inicio, int coluna, String Pesquisa, boolean pesquisarAbaixo)
@@ -72,7 +70,7 @@ public abstract class BaseTabela extends JTable
 
     public DefaultTableModel getModelo()
     {
-        return model;
+        return (DefaultTableModel) getModel();
     }
     
     public abstract void Add(Object object);

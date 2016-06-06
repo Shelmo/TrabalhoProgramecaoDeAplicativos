@@ -163,5 +163,15 @@ public abstract class JFrame_Base extends javax.swing.JFrame
         return jButton_Voltar;
     }
 
+    public JPanel getjPanel_SOUTH_EAST()
+    {
+        return jPanel_SOUTH_EAST;
+    }
+
+    public JPanel getjPanel_SOUTH_CENTER()
+    {
+        return jPanel_SOUTH_CENTER;
+    }
+
     public abstract void Confirmar();
 }

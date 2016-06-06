@@ -39,6 +39,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
     private JButton jButton_Add;
     private JButton jButton_Remove;
     private JButton jButton_Search;
+    private JButton jButton_FecharPedido;
     
     private JSpinner jSpinner_Quantidade;
     
@@ -75,6 +76,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jButton_Add = new JButton();
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
+        jButton_FecharPedido = new JButton();
         
         jSpinner_Quantidade = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
         
@@ -91,6 +93,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jButton_Search.setIcon(icone);
         
         //Texto e formatações
+        jButton_FecharPedido.setText("Fechar Pedido");
         jLabel_Cliente.setText("(*)Cliente:");
         jLabel_Itens.setText("(*)Itens");
         jLabel_Mesa.setText("(*)Mesa: ");
@@ -119,7 +122,6 @@ public abstract class JFrame_Pedido extends JFrame_Base
         });
         for(int i = 1;i<16;i++)
             jComboBox_Mesa.addItem("Mesa "+ i);
-        
         
         //Painel Central
         getGBC().fill = GridBagConstraints.BOTH;
@@ -198,9 +200,6 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getGBC().gridwidth = GridBagConstraints.REMAINDER;
         getGBC().gridheight = GridBagConstraints.REMAINDER;  
         getjPanel_CENTER().add(jScrollPane_TabelaItensPedido, getGBC());
-        
-        //Botões
-        
     }
     
     public boolean VerificarProduto()
@@ -287,6 +286,11 @@ public abstract class JFrame_Pedido extends JFrame_Base
     public JSpinner getjSpinner_Quantidade()
     {
         return jSpinner_Quantidade;
+    }
+
+    public JButton getjButton_FecharPedido()
+    {
+        return jButton_FecharPedido;
     }
 
     public TabelaItensPedido getTabelaItensPedido()
