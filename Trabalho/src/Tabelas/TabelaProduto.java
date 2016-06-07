@@ -16,7 +16,7 @@ public class TabelaProduto extends BaseTabela
     public TabelaProduto()
     {
         super();
-        listaProduto = DAO_Generalizado.getList("from Produto");
+        listaProduto = DAO_Generalizado.getList("from Produto", -1);
         TabelaProduto();
     }
 

@@ -61,7 +61,7 @@ public class DAO_Generalizado
 	}
     }
     
-    public static ArrayList getList(String hql)
+    public static ArrayList getList(String hql, int valor)
     {
         Session sessao;
         Transaction transaction;
@@ -73,6 +73,8 @@ public class DAO_Generalizado
             sessao = Hibernate.getSession();
             transaction = sessao.beginTransaction();
             consulta = sessao.createQuery(hql);
+            if(valor != -1)
+                consulta.setInteger("id", valor);
             resultado = (ArrayList) consulta.list();
             transaction.commit();
             Hibernate.CloseSession();

@@ -15,7 +15,7 @@ public class TabelaPedido extends BaseTabela
     public TabelaPedido()
     {
         super();
-        listaPedido = DAO_Generalizado.getList("from Pedido");
+        listaPedido = DAO_Generalizado.getList("from Pedido", -1);
         TabelaCategoria();
     }
     

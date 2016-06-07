@@ -15,6 +15,7 @@ import Telas.TelaCliente.JFrame_LocalizarCliente;
 import Telas.TelaCliente.JFrame_NovoCliente;
 import Telas.TelaCliente.JFrame_RemoverCliente;
 import Telas.TelaPedido.JFrame_NovoPedido;
+import Telas.TelaPedido.JFrame_RemoverPedido;
 import Telas.TelaProduto.JFrame_AlterarProduto;
 import Telas.TelaProduto.JFrame_LocalizarProduto;
 import Telas.TelaProduto.JFrame_NovoProduto;
@@ -34,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import model.Categoria;
 import model.Cliente;
+import model.Pedido;
 import model.Produto;
 
 /**
@@ -42,17 +44,17 @@ import model.Produto;
  */
 public class JFrame_Principal extends JFrame_Base
 {
-
+    
     private boolean CategoriaSelecionado;
     private boolean ProdutoSelecionado;
     private boolean ClienteSelecionado;
     private boolean PedidoSelecionado;
-
+    
     private final int CATEGORIA = 0;
     private final int PRODUTO = 1;
     private final int CLIENTE = 2;
     private final int PEDIDO = 3;
-
+    
     private JButton jButton_Categoria;
     private JButton jButton_Produto;
     private JButton jButton_Cliente;
@@ -62,26 +64,26 @@ public class JFrame_Principal extends JFrame_Base
     private JButton jButton_Update;
     private JButton jButton_Search;
     private JButton jButton_Close;
-
+    
     private JScrollPane jScrollPane_BaseTabela;
-
+    
     private JTable JTableAtual;
     private ArrayList arrayList;
-
+    
     private JMenuBar jMenuBar;
-
+    
     private JMenu jMenu_Categoria;
     private JMenu jMenu_Produto;
     private JMenu jMenu_Cliente;
     private JMenu jMenu_Sobre;
-
+    
     private JMenuItem jMenuItem_NovaCategoria;
     private JMenuItem jMenuItem_LocalizarCategoria;
     private JMenuItem jMenuItem_NovoProduto;
     private JMenuItem jMenuItem_LocalizarProduto;
     private JMenuItem jMenuItem_NovoCliente;
     private JMenuItem jMenuItem_LocalizarCliente;
-
+    
     public JFrame_Principal()
     {
         super("src\\Imagens\\TelaPrincipal.jpg");
@@ -89,7 +91,7 @@ public class JFrame_Principal extends JFrame_Base
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
     }
-
+    
     public void Componentes()
     {
         //Criar componentes
@@ -102,7 +104,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
         jButton_Update = new JButton();
-
+        
         jMenuBar = new JMenuBar();
         jMenu_Categoria = new JMenu();
         jMenu_Cliente = new JMenu();
@@ -149,14 +151,14 @@ public class JFrame_Principal extends JFrame_Base
         jMenuItem_LocalizarProduto.setText("Localizar Produto");
         jMenuItem_NovoCliente.setText("Novo Cliente");
         jMenuItem_LocalizarCliente.setText("Localizar Cliente");
-
+        
         jMenu_Categoria.add(jMenuItem_NovaCategoria);
         jMenu_Categoria.add(jMenuItem_LocalizarCategoria);
         jMenu_Produto.add(jMenuItem_NovoProduto);
         jMenu_Produto.add(jMenuItem_LocalizarProduto);
         jMenu_Cliente.add(jMenuItem_NovoCliente);
         jMenu_Cliente.add(jMenuItem_LocalizarCliente);
-
+        
         jMenuBar.add(jMenu_Categoria);
         jMenuBar.add(jMenu_Produto);
         jMenuBar.add(jMenu_Cliente);
@@ -263,6 +265,10 @@ public class JFrame_Principal extends JFrame_Base
                     {
                         Remover(CLIENTE);
                     }
+                    if (PedidoSelecionado)
+                    {
+                        Remover(PEDIDO);
+                    }
         });
 
         //Botão Alterar
@@ -350,7 +356,7 @@ public class JFrame_Principal extends JFrame_Base
                 {
                     Modal(new JFrame_NovaCategoria((TabelaCategoria) JTableAtual));
         });
-
+        
         jMenuItem_LocalizarCategoria.addActionListener((java.awt.event.ActionEvent evt)
                 -> 
                 {
@@ -366,13 +372,13 @@ public class JFrame_Principal extends JFrame_Base
                 TrocaTela(PRODUTO);
             }
         });
-
+        
         jMenuItem_NovoProduto.addActionListener((java.awt.event.ActionEvent evt)
                 -> 
                 {
                     Modal(new JFrame_NovoProduto((TabelaProduto) JTableAtual));
         });
-
+        
         jMenuItem_LocalizarProduto.addActionListener((java.awt.event.ActionEvent evt)
                 -> 
                 {
@@ -387,20 +393,20 @@ public class JFrame_Principal extends JFrame_Base
                 TrocaTela(CLIENTE);
             }
         });
-
+        
         jMenuItem_NovoCliente.addActionListener((java.awt.event.ActionEvent evt)
                 -> 
                 {
                     Modal(new JFrame_NovoCliente((TabelaCliente) JTableAtual));
         });
-
+        
         jMenuItem_LocalizarCliente.addActionListener((java.awt.event.ActionEvent evt)
                 -> 
                 {
                     Localizar(CLIENTE);
         });
     }
-
+    
     private void TrocaTela(int constante)
     {
         if (constante == CATEGORIA)
@@ -420,7 +426,7 @@ public class JFrame_Principal extends JFrame_Base
             MontarJPanelCentral(PEDIDO);
         }
     }
-
+    
     private int SelecionarTabela(boolean mostrar)
     {
         int select = JTableAtual.getSelectedRow();
@@ -428,46 +434,55 @@ public class JFrame_Principal extends JFrame_Base
         {
             JOptionPane.showMessageDialog(null, "Nunhum campo selecionado!", "Erro!", 2);
         }
-
+        
         return select;
     }
-
+    
     private void Remover(int constante)
     {
         int select = SelecionarTabela(true);
-
+        
         if (constante == CATEGORIA)
         {
             Modal(new JFrame_RemoverCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
         }
-
+        
         if (constante == PRODUTO)
         {
             Modal(new JFrame_RemoverProduto(select, (Produto) arrayList.get(select), (TabelaProduto) JTableAtual));
         }
-
-        if(constante == CLIENTE)
+        
+        if (constante == CLIENTE)
+        {
             Modal(new JFrame_RemoverCliente(select, (Cliente) arrayList.get(select), (TabelaCliente) JTableAtual));
+        }
+        
+        if (constante == PEDIDO)
+        {
+            Modal(new JFrame_RemoverPedido(select, (Pedido) arrayList.get(select), (TabelaPedido) JTableAtual));
+        }
     }
-
+    
     private void Alterar(int constante)
     {
         int select = SelecionarTabela(true);
-
+        
         if (constante == CATEGORIA)
         {
             Modal(new JFrame_AlterarCategoria(select, (Categoria) arrayList.get(select), (TabelaCategoria) JTableAtual));
         }
-
+        
         if (constante == PRODUTO)
         {
             Modal(new JFrame_AlterarProduto(select, (Produto) arrayList.get(select), (TabelaProduto) JTableAtual));
         }
-
-        if(constante == CLIENTE)
+        
+        if (constante == CLIENTE)
+        {
             Modal(new JFrame_AlterarCliente(select, (Cliente) arrayList.get(select), (TabelaCliente) JTableAtual));
+        }
     }
-
+    
     private void Localizar(int constante)
     {
         int select = SelecionarTabela(false);
@@ -475,18 +490,18 @@ public class JFrame_Principal extends JFrame_Base
         {
             Modal(new JFrame_LocalizarCategoria(select, (TabelaCategoria) JTableAtual));
         }
-
+        
         if (constante == PRODUTO)
         {
             Modal(new JFrame_LocalizarProduto(select, (TabelaProduto) JTableAtual));
         }
-
+        
         if (constante == CLIENTE)
         {
             Modal(new JFrame_LocalizarCliente(select, (TabelaCliente) JTableAtual));
         }
     }
-
+    
     private void MontarJPanelCentral(int constante)
     {
         if (jScrollPane_BaseTabela != null)
@@ -501,14 +516,14 @@ public class JFrame_Principal extends JFrame_Base
             arrayList = tabelaCategoria.getLista();
             JTableAtual = tabelaCategoria;
         }
-
+        
         if (constante == PRODUTO)
         {
             TabelaProduto tabelaProduto = new TabelaProduto();
             arrayList = tabelaProduto.getLista();
             JTableAtual = tabelaProduto;
         }
-
+        
         if (constante == CLIENTE)
         {
             TabelaCliente tabelaCliente = new TabelaCliente();
@@ -516,13 +531,13 @@ public class JFrame_Principal extends JFrame_Base
             JTableAtual = tabelaCliente;
         }
         
-        if(constante == PEDIDO)
+        if (constante == PEDIDO)
         {
             TabelaPedido tabelaPedido = new TabelaPedido();
             arrayList = tabelaPedido.getLista();
             JTableAtual = tabelaPedido;
         }
-
+        
         jScrollPane_BaseTabela = new JScrollPane(JTableAtual);
 
         //Linha 1
@@ -535,7 +550,7 @@ public class JFrame_Principal extends JFrame_Base
         getGBC().gridheight = GridBagConstraints.REMAINDER;
         getjPanel_CENTER().add(jScrollPane_BaseTabela, getGBC());
     }
-
+    
     private void VisibilidadeBotoes(boolean visivel)
     {
         jButton_Add.setVisible(visivel);
@@ -544,52 +559,52 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Search.setVisible(visivel);
         jButton_Update.setVisible(visivel);
     }
-
+    
     private void LimparTela()
     {
         TelaSelecionada(-1);
         VisibilidadeBotoes(false);
         jScrollPane_BaseTabela.setVisible(false);
     }
-
+    
     private void TelaSelecionada(int constante)
     {
         CategoriaSelecionado = false;
         ProdutoSelecionado = false;
         ClienteSelecionado = false;
         PedidoSelecionado = false;
-
+        
         if (constante == CATEGORIA)
         {
             CategoriaSelecionado = true;
         }
-
+        
         if (constante == PRODUTO)
         {
             ProdutoSelecionado = true;
         }
-
+        
         if (constante == CLIENTE)
         {
             ClienteSelecionado = true;
         }
-
+        
         if (constante == PEDIDO)
         {
             PedidoSelecionado = true;
         }
     }
-
+    
     private void Modal(JFrame jFrame)
     {
         Modal.showAsModal(jFrame, this);
     }
-
+    
     @Override
     public void Confirmar()
     {/*Não utilizada para classe principal*/
     }
-
+    
     public static void main(String args[])
     {
         java.awt.EventQueue.invokeLater(()

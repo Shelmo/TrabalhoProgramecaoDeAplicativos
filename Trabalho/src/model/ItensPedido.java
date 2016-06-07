@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,10 +26,6 @@ public class ItensPedido implements Serializable
     private int idItensPedido;
     
     @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "idPedido")
-    private Pedido pedido;
-    
-    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "idProduto")
     private Produto produto;
     
@@ -43,16 +40,6 @@ public class ItensPedido implements Serializable
     public void setIdItensPedido(int idItensPedido)
     {
         this.idItensPedido = idItensPedido;
-    }
-
-    public Pedido getPedido()
-    {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido)
-    {
-        this.pedido = pedido;
     }
 
     public Produto getProduto()

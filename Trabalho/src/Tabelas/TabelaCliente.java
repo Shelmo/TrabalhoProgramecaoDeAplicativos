@@ -18,7 +18,7 @@ public class TabelaCliente extends BaseTabela
     public TabelaCliente()
     {
         super();
-        listaCliente = DAO_Generalizado.getList("from Cliente");
+        listaCliente = DAO_Generalizado.getList("from Cliente", -1);
         TabelaCategoria();
     }
 

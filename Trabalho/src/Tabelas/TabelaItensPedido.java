@@ -1,7 +1,10 @@
 package Tabelas;
 
+import dao.DAO_Generalizado;
 import java.util.ArrayList;
+import java.util.List;
 import model.ItensPedido;
+import model.Pedido;
 
 /**
  *
@@ -10,7 +13,7 @@ import model.ItensPedido;
 public class TabelaItensPedido extends BaseTabela
 {
 
-    private final ArrayList<ItensPedido> listaItensPedido;
+    private ArrayList<ItensPedido> listaItensPedido;
 
     public TabelaItensPedido()
     {
@@ -40,10 +43,39 @@ public class TabelaItensPedido extends BaseTabela
         return String.valueOf(String.format("%.2f", value)).replace(".", ",");
     }
 
+    public void carregarTabela(List<ItensPedido> itensPedidosList)
+    {
+        if (!itensPedidosList.isEmpty())
+        {
+            itensPedidosList.stream().forEach((ip)
+                    -> 
+                    {
+                        getModelo().addRow(new Object[]
+                        {
+                            ip.getProduto().getCategoria().getNomeCategoria(), ip.getProduto().getNomeProduto(),
+                            ip.getQuantidade(), valor(ip.getProduto().getValorProduto()), valor((ip.getQuantidade() * ip.getProduto().getValorProduto()))
+                        });
+            });
+        }
+    }
+
     @Override
     public void Add(Object object)
     {
         ItensPedido ip = (ItensPedido) object;
+        int i = 0;
+        for (ItensPedido ipd : listaItensPedido)
+        {
+            if (ipd.getProduto().equals(ip.getProduto()))
+            {
+                ip.setQuantidade(ip.getQuantidade() + ipd.getQuantidade());
+                listaItensPedido.set(i, ip);
+                getModelo().setValueAt(ip.getQuantidade(), i, 2);
+                return;
+            }
+            i++;
+        }
+
         listaItensPedido.add(ip);
         getModelo().addRow(new Object[]
         {
@@ -64,7 +96,7 @@ public class TabelaItensPedido extends BaseTabela
     {
         /*Não utilizada nessa Classe*/
     }
-    
+
     public void clearTable()
     {
         listaItensPedido.clear();

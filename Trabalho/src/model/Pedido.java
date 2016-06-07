@@ -1,6 +1,10 @@
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,8 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -17,7 +24,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "Pedido")
-public class Pedido
+public class Pedido implements Serializable
 {
     @Id
     @GeneratedValue
@@ -28,12 +35,24 @@ public class Pedido
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
     
+    @Column(name = "dataFechamento")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataFechamento;
+    
     @Column(name = "mesa")
     private String mesa;
+    
+    @Column(name = "situacao")
+    private String situacao;
     
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "idCliente")
     private Cliente cliente;
+    
+    @OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="idPedido")
+    @Fetch(FetchMode.JOIN)
+    private List<ItensPedido> listItensPedidos = new ArrayList<ItensPedido>();
 
     public int getIdPedido()
     {
@@ -73,5 +92,35 @@ public class Pedido
     public void setCliente(Cliente cliente)
     {
         this.cliente = cliente;
+    }
+
+    public Date getDataFechamento()
+    {
+        return dataFechamento;
+    }
+
+    public void setDataFechamento(Date dataFechamento)
+    {
+        this.dataFechamento = dataFechamento;
+    }
+
+    public String getSituacao()
+    {
+        return situacao;
+    }
+
+    public void setListItensPedidos(List<ItensPedido> listItensPedidos)
+    {
+        this.listItensPedidos = listItensPedidos;
+    }
+
+    public List<ItensPedido> getListItensPedidos()
+    {
+        return listItensPedidos;
+    }
+
+    public void setSituacao(String situacao)
+    {
+        this.situacao = situacao;
     }
 }

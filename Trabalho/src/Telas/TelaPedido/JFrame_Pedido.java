@@ -106,6 +106,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)jSpinner_Quantidade.getEditor();
         DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
+        jButton_FecharPedido.setFont(new java.awt.Font("Tahoma", 1, 13));
         
         //Carregar ComboBox
         jComboBox_Cliente.addItem("---SELECIONE---");
@@ -291,6 +292,16 @@ public abstract class JFrame_Pedido extends JFrame_Base
     public JButton getjButton_FecharPedido()
     {
         return jButton_FecharPedido;
+    }
+
+    public JLabel getjLabel_Produto()
+    {
+        return jLabel_Produto;
+    }
+
+    public JLabel getjLabel_Quantidade()
+    {
+        return jLabel_Quantidade;
     }
 
     public TabelaItensPedido getTabelaItensPedido()

@@ -16,7 +16,7 @@ public class TabelaCategoria extends BaseTabela
     public TabelaCategoria()
     {
         super();
-        listaCategoria = DAO_Generalizado.getList("from Categoria");
+        listaCategoria = DAO_Generalizado.getList("from Categoria", -1);
         TabelaCategoria();
     }
 
