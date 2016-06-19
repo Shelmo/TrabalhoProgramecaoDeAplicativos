@@ -18,7 +18,7 @@ public class TabelaCliente extends BaseTabela
     public TabelaCliente()
     {
         super();
-        listaCliente = DAO_Generalizado.getList("from Cliente", -1);
+        listaCliente = DAO_Generalizado.getList("from Cliente");
         TabelaCategoria();
     }
 
@@ -95,6 +95,17 @@ public class TabelaCliente extends BaseTabela
             c.getNomeCliente(), c.getCpfCliente(), Data(c.getDataNascimentoCliente()), c.getCidadeCliente(), c.getBairroCliente(),
             c.getLogradouroCliente(), c.getNumeroCliente(), c.getComplementoCliente(), c.getCepCliente(), c.getFoneCliente(), c.getCelularCliente(),
             c.getEmailCliente()
+        });
+    }
+    
+    @Override
+    public void rebuild(ArrayList arrayList)
+    {
+        listaCliente.clear();
+        getModelo().getDataVector().removeAllElements();
+        arrayList.stream().forEach((object) ->
+        {
+            Add(object);
         });
     }
 

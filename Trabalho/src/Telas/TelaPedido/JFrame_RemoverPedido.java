@@ -2,8 +2,6 @@ package Telas.TelaPedido;
 
 import Tabelas.TabelaPedido;
 import dao.DAO_Generalizado;
-import java.util.ArrayList;
-import model.ItensPedido;
 import model.Pedido;
 
 /**
@@ -38,9 +36,9 @@ public class JFrame_RemoverPedido extends JFrame_Pedido
         getjLabel_Quantidade().setVisible(false);
         
         getjComboBox_Cliente().setSelectedItem(pedido.getCliente());
+
+        pedido.getListItensPedidos().stream().forEach(getTabelaItensPedido()::Add);
         getjComboBox_Mesa().setSelectedItem(pedido.getMesa());
-        
-        getTabelaItensPedido().carregarTabela(pedido.getListItensPedidos());
         getTabelaItensPedido().setEnabled(false);
     }
 

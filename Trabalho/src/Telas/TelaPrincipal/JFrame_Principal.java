@@ -7,16 +7,22 @@ import Tabelas.TabelaProduto;
 import Telas.JFrame_Base;
 import Telas.Modal;
 import Telas.TelaCategoria.JFrame_AlterarCategoria;
+import Telas.TelaCategoria.JFrame_FiltroCategoria;
 import Telas.TelaCategoria.JFrame_LocalizarCategoria;
 import Telas.TelaCategoria.JFrame_NovaCategoria;
 import Telas.TelaCategoria.JFrame_RemoverCategoria;
 import Telas.TelaCliente.JFrame_AlterarCliente;
+import Telas.TelaCliente.JFrame_FiltroCliente;
 import Telas.TelaCliente.JFrame_LocalizarCliente;
 import Telas.TelaCliente.JFrame_NovoCliente;
 import Telas.TelaCliente.JFrame_RemoverCliente;
+import Telas.TelaPedido.JFrame_AlterarPedido;
+import Telas.TelaPedido.JFrame_FiltroPedido;
+import Telas.TelaPedido.JFrame_LocalizarPedido;
 import Telas.TelaPedido.JFrame_NovoPedido;
 import Telas.TelaPedido.JFrame_RemoverPedido;
 import Telas.TelaProduto.JFrame_AlterarProduto;
+import Telas.TelaProduto.JFrame_FiltroProduto;
 import Telas.TelaProduto.JFrame_LocalizarProduto;
 import Telas.TelaProduto.JFrame_NovoProduto;
 import Telas.TelaProduto.JFrame_RemoverProduto;
@@ -37,6 +43,7 @@ import model.Categoria;
 import model.Cliente;
 import model.Pedido;
 import model.Produto;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -63,6 +70,7 @@ public class JFrame_Principal extends JFrame_Base
     private JButton jButton_Remove;
     private JButton jButton_Update;
     private JButton jButton_Search;
+    private JButton jButton_Filter;
     private JButton jButton_Close;
     
     private JScrollPane jScrollPane_BaseTabela;
@@ -104,6 +112,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
         jButton_Update = new JButton();
+        jButton_Filter = new JButton();
         
         jMenuBar = new JMenuBar();
         jMenu_Categoria = new JMenu();
@@ -139,6 +148,8 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Search.setIcon(icone);
         icone = new ImageIcon("src\\Imagens\\update.png");
         jButton_Update.setIcon(icone);
+        icone = new ImageIcon("src\\Imagens\\filter.png");
+        jButton_Filter.setIcon(icone);
 
         //Texto e formatações
         jMenu_Categoria.setText("Categorias");
@@ -196,6 +207,8 @@ public class JFrame_Principal extends JFrame_Base
         getGBC().gridx = 3;
         getjPanel_CENTER().add(jButton_Search, getGBC());
         getGBC().gridx = 4;
+        getjPanel_CENTER().add(jButton_Filter, getGBC());
+        getGBC().gridx = 5;
         getjPanel_CENTER().add(jButton_Close, getGBC());
 
         //Ações de botões
@@ -287,6 +300,10 @@ public class JFrame_Principal extends JFrame_Base
                     {
                         Alterar(CLIENTE);
                     }
+                    if (PedidoSelecionado)
+                    {
+                        Alterar(PEDIDO);
+                    }
         });
 
         //Botão Pesquisar
@@ -304,6 +321,32 @@ public class JFrame_Principal extends JFrame_Base
                     if (ClienteSelecionado)
                     {
                         Localizar(CLIENTE);
+                    }
+                    if (PedidoSelecionado)
+                    {
+                        Localizar(PEDIDO);
+                    }
+        });
+        
+        //Botão Filtrar
+        jButton_Filter.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    if (CategoriaSelecionado)
+                    {
+                        Filtrar(CATEGORIA);
+                    }
+                    if (ProdutoSelecionado)
+                    {
+                        Filtrar(PRODUTO);
+                    }
+                    if (ClienteSelecionado)
+                    {
+                        Filtrar(CLIENTE);
+                    }
+                    if (PedidoSelecionado)
+                    {
+                        Filtrar(PEDIDO);
                     }
         });
 
@@ -481,6 +524,11 @@ public class JFrame_Principal extends JFrame_Base
         {
             Modal(new JFrame_AlterarCliente(select, (Cliente) arrayList.get(select), (TabelaCliente) JTableAtual));
         }
+        
+        if (constante == PEDIDO)
+        {
+            Modal(new JFrame_AlterarPedido(select, (Pedido) arrayList.get(select), (TabelaPedido) JTableAtual));
+        }
     }
     
     private void Localizar(int constante)
@@ -499,6 +547,30 @@ public class JFrame_Principal extends JFrame_Base
         if (constante == CLIENTE)
         {
             Modal(new JFrame_LocalizarCliente(select, (TabelaCliente) JTableAtual));
+        }
+        if (constante == PEDIDO)
+        {
+            Modal(new JFrame_LocalizarPedido(select, (TabelaPedido) JTableAtual));
+        }
+    }
+    
+    private void Filtrar(int constante)
+    {
+        if (constante == CATEGORIA)
+        {
+            Modal(new JFrame_FiltroCategoria((TabelaCategoria) JTableAtual));
+        }
+        if (constante == CLIENTE)
+        {
+            Modal(new JFrame_FiltroCliente((TabelaCliente) JTableAtual));
+        }
+        if (constante == PRODUTO)
+        {
+            Modal(new JFrame_FiltroProduto((TabelaProduto) JTableAtual));
+        }
+        if (constante == PEDIDO)
+        {
+            Modal(new JFrame_FiltroPedido((TabelaPedido) JTableAtual));
         }
     }
     
@@ -558,6 +630,7 @@ public class JFrame_Principal extends JFrame_Base
         jButton_Remove.setVisible(visivel);
         jButton_Search.setVisible(visivel);
         jButton_Update.setVisible(visivel);
+        jButton_Filter.setVisible(visivel);
     }
     
     private void LimparTela()

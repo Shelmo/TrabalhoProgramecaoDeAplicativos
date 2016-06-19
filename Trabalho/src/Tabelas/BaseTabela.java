@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Tabelas;
 
 import java.awt.Component;
@@ -78,6 +73,8 @@ public abstract class BaseTabela extends JTable
     public abstract void Remove(int select);
     
     public abstract void update (Object object, int select);
+    
+    public abstract void rebuild(ArrayList arrayList);
     
     public abstract ArrayList getLista();
 }

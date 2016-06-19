@@ -6,14 +6,14 @@
 package Telas.TelaPedido;
 
 import Tabelas.TabelaItensPedido;
-import Telas.JFrame_BaseLocalizar;
+import Telas.JFrame_BaseFiltros;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Shelmo
  */
-public class JFrame_LocalizarItensPedido extends JFrame_BaseLocalizar
+public class JFrame_LocalizarItensPedido extends JFrame_BaseFiltros
 {
 
     private final int select;
@@ -26,6 +26,14 @@ public class JFrame_LocalizarItensPedido extends JFrame_BaseLocalizar
         this.select = select;
         this.tabelaItensPedido = tabelaItensPedido;
 
+        //Textos
+        getjLabel_Titulo().setText("Localizar");
+        getjButton_Confirmar().setText("Localizar");
+        getjLabel_LocalizarFiltrar().setText("(*) Localizar");
+        getjLabel_Aviso().setText("(*) Campos obrigatórios!");
+        getjCheckBox_PesquisarAbaixo().setText("Localizar Abaixo");
+        getjCheckBox_PesquisarAcima().setText("Localizar Acima");
+        
         getjCheckBox1().setText("Localizar por Categoria");
         getjCheckBox2().setText("Localizar por Produto");
         getjCheckBox3().setVisible(false);
@@ -64,7 +72,7 @@ public class JFrame_LocalizarItensPedido extends JFrame_BaseLocalizar
                 coluna = 1;
             }
 
-            if (tabelaItensPedido.selecionarLinhaTabela(select, coluna, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
+            if (tabelaItensPedido.selecionarLinhaTabela(select, coluna, getjFormattedTextField_LocalizarFiltrar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
             {
                 dispose();
             }

@@ -2,6 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -61,7 +62,7 @@ public class DAO_Generalizado
 	}
     }
     
-    public static ArrayList getList(String hql, int valor)
+    public static ArrayList getList(String hql)
     {
         Session sessao;
         Transaction transaction;
@@ -73,8 +74,6 @@ public class DAO_Generalizado
             sessao = Hibernate.getSession();
             transaction = sessao.beginTransaction();
             consulta = sessao.createQuery(hql);
-            if(valor != -1)
-                consulta.setInteger("id", valor);
             resultado = (ArrayList) consulta.list();
             transaction.commit();
             Hibernate.CloseSession();
@@ -85,5 +84,14 @@ public class DAO_Generalizado
             System.out.println("Erro: " + e.getMessage());
             return null;
         }
+    }
+    
+    public static ArrayList getList(Criteria criteria)
+    {
+        ArrayList resultado;
+        
+        resultado = (ArrayList) criteria.list();
+        
+        return resultado;
     }
 }

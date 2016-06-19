@@ -68,6 +68,12 @@ public class JFrame_NovoPedido extends JFrame_Pedido
             
             new JFrame_LocalizarItensPedido(select, getTabelaItensPedido());
         });
+        getjButton_FecharPedido().addActionListener((java.awt.event.ActionEvent evt) ->
+        {
+            this.pedido.setSituacao("F");
+            this.pedido.setDataFechamento(new Date());
+            Confirmar();
+        });
     }
 
     @Override
@@ -76,25 +82,13 @@ public class JFrame_NovoPedido extends JFrame_Pedido
         LimparErros();
         if (Verificacoes())
         {
-            Date data = new Date();
             pedido.setCliente((Cliente) getjComboBox_Cliente().getSelectedItem());
             pedido.setMesa((String) getjComboBox_Mesa().getSelectedItem());
-            pedido.setDataCadastro(data);
+            pedido.setDataCadastro(new Date());
             pedido.setSituacao("A");
             int index = (int) DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.SALVAR);
             pedido.setIdPedido(index);
             tabelaPedido.Add(pedido);
-
-//            getTabelaItensPedido().getLista().stream().map((ip)
-//                    -> 
-//                    {
-//                        ip.setPedido(pedido);
-//                        return ip;
-//            }).forEach((ip)
-//                    -> 
-//                    {
-//                        DAO_Generalizado.incluirAlterar(ip, DAO_Generalizado.SALVAR);
-//            });
 
             getTabelaItensPedido().clearTable();
             LimparCampos();

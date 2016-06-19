@@ -16,7 +16,7 @@ public class TabelaCategoria extends BaseTabela
     public TabelaCategoria()
     {
         super();
-        listaCategoria = DAO_Generalizado.getList("from Categoria", -1);
+        listaCategoria = DAO_Generalizado.getList("from Categoria");
         TabelaCategoria();
     }
 
@@ -73,6 +73,17 @@ public class TabelaCategoria extends BaseTabela
         getModelo().insertRow(select, new Object[]
         {
             ((Categoria) object).getNomeCategoria()
+        });
+    }
+    
+    @Override
+    public void rebuild(ArrayList arrayList)
+    {
+        listaCategoria.clear();
+        getModelo().getDataVector().removeAllElements();
+        arrayList.stream().forEach((object) ->
+        {
+            Add(object);
         });
     }
 

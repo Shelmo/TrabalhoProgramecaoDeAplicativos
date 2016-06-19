@@ -52,7 +52,7 @@ public class Pedido implements Serializable
     @OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="idPedido")
     @Fetch(FetchMode.JOIN)
-    private List<ItensPedido> listItensPedidos = new ArrayList<ItensPedido>();
+    private List<ItensPedido> listItensPedidos = new ArrayList<>();
 
     public int getIdPedido()
     {

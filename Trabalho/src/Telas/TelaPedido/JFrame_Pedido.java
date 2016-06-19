@@ -40,6 +40,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
     private JButton jButton_Remove;
     private JButton jButton_Search;
     private JButton jButton_FecharPedido;
+    private JButton jButton_Filter;
     
     private JSpinner jSpinner_Quantidade;
     
@@ -77,6 +78,7 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jButton_Remove = new JButton();
         jButton_Search = new JButton();
         jButton_FecharPedido = new JButton();
+        jButton_Filter = new JButton();
         
         jSpinner_Quantidade = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
         
@@ -91,6 +93,8 @@ public abstract class JFrame_Pedido extends JFrame_Base
         jButton_Remove.setIcon(icone);
         icone = new ImageIcon("src\\Imagens\\ItensSearch.png");
         jButton_Search.setIcon(icone);
+        icone = new ImageIcon("src\\Imagens\\ItensFilter.png");
+        jButton_Filter.setIcon(icone);
         
         //Texto e formatações
         jButton_FecharPedido.setText("Fechar Pedido");
@@ -191,6 +195,8 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getjPanel_CENTER().add(jButton_Remove, getGBC());
         getGBC().gridx = 1;
         getjPanel_CENTER().add(jButton_Search, getGBC());
+        getGBC().gridx = 2;
+        getjPanel_CENTER().add(jButton_Filter, getGBC());
         
         //Linha 8
         getGBC().fill = GridBagConstraints.BOTH;
@@ -201,6 +207,12 @@ public abstract class JFrame_Pedido extends JFrame_Base
         getGBC().gridwidth = GridBagConstraints.REMAINDER;
         getGBC().gridheight = GridBagConstraints.REMAINDER;  
         getjPanel_CENTER().add(jScrollPane_TabelaItensPedido, getGBC());
+        
+        jButton_Filter.addActionListener((java.awt.event.ActionEvent evt)
+                -> 
+                {
+                    Telas.Modal.showAsModal(new JFrame_FiltroItensPedido(tabelaItensPedido), this);
+        });
     }
     
     public boolean VerificarProduto()

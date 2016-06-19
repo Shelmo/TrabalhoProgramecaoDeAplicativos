@@ -16,7 +16,7 @@ public class TabelaProduto extends BaseTabela
     public TabelaProduto()
     {
         super();
-        listaProduto = DAO_Generalizado.getList("from Produto", -1);
+        listaProduto = DAO_Generalizado.getList("from Produto");
         TabelaProduto();
     }
 
@@ -81,6 +81,17 @@ public class TabelaProduto extends BaseTabela
         getModelo().insertRow(select, new Object[]
         {
             p.getCategoria(), p.getNomeProduto(), valor(p.getValorProduto()), p.getDescricaoProduto()
+        });
+    }
+    
+    @Override
+    public void rebuild(ArrayList arrayList)
+    {
+        listaProduto.clear();
+        getModelo().getDataVector().removeAllElements();
+        arrayList.stream().forEach((object) ->
+        {
+            Add(object);
         });
     }
 

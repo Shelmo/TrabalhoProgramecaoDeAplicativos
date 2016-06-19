@@ -1,10 +1,7 @@
 package Tabelas;
 
-import dao.DAO_Generalizado;
 import java.util.ArrayList;
-import java.util.List;
 import model.ItensPedido;
-import model.Pedido;
 
 /**
  *
@@ -43,22 +40,6 @@ public class TabelaItensPedido extends BaseTabela
         return String.valueOf(String.format("%.2f", value)).replace(".", ",");
     }
 
-    public void carregarTabela(List<ItensPedido> itensPedidosList)
-    {
-        if (!itensPedidosList.isEmpty())
-        {
-            itensPedidosList.stream().forEach((ip)
-                    -> 
-                    {
-                        getModelo().addRow(new Object[]
-                        {
-                            ip.getProduto().getCategoria().getNomeCategoria(), ip.getProduto().getNomeProduto(),
-                            ip.getQuantidade(), valor(ip.getProduto().getValorProduto()), valor((ip.getQuantidade() * ip.getProduto().getValorProduto()))
-                        });
-            });
-        }
-    }
-
     @Override
     public void Add(Object object)
     {
@@ -66,16 +47,17 @@ public class TabelaItensPedido extends BaseTabela
         int i = 0;
         for (ItensPedido ipd : listaItensPedido)
         {
-            if (ipd.getProduto().equals(ip.getProduto()))
+            if (ipd.getProduto().getNomeProduto().equals(ip.getProduto().getNomeProduto()))
             {
                 ip.setQuantidade(ip.getQuantidade() + ipd.getQuantidade());
                 listaItensPedido.set(i, ip);
                 getModelo().setValueAt(ip.getQuantidade(), i, 2);
+                getModelo().setValueAt(valor((ip.getQuantidade() * ip.getProduto().getValorProduto())), i, 4);
                 return;
             }
             i++;
         }
-
+        
         listaItensPedido.add(ip);
         getModelo().addRow(new Object[]
         {
@@ -87,14 +69,33 @@ public class TabelaItensPedido extends BaseTabela
     @Override
     public void Remove(int select)
     {
-        listaItensPedido.remove(select);
-        getModelo().removeRow(select);
+        if(listaItensPedido.get(select).getQuantidade() != 1)
+        {
+            listaItensPedido.get(select).setQuantidade(listaItensPedido.get(select).getQuantidade()-1);
+            getModelo().setValueAt(listaItensPedido.get(select).getQuantidade(), select, 2);
+        }
+        else
+        {
+            listaItensPedido.remove(select);
+            getModelo().removeRow(select);
+        }
     }
 
     @Override
     public void update(Object object, int select)
     {
         /*Não utilizada nessa Classe*/
+    }
+    
+    @Override
+    public void rebuild(ArrayList arrayList)
+    {
+        listaItensPedido.clear();
+        getModelo().getDataVector().removeAllElements();
+        arrayList.stream().forEach((object) ->
+        {
+            Add(object);
+        });
     }
 
     public void clearTable()

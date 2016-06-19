@@ -1,14 +1,14 @@
 package Telas.TelaCliente;
 
 import Tabelas.TabelaCliente;
-import Telas.JFrame_BaseLocalizar;
+import Telas.JFrame_BaseFiltros;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Shelmo
  */
-public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
+public class JFrame_LocalizarCliente extends JFrame_BaseFiltros
 {
     private final int select;
     private final TabelaCliente tabelaCliente;
@@ -18,6 +18,14 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
         this.select = select;
         this.tabelaCliente = tabelaCliente;
         
+        //Textos
+        getjLabel_Titulo().setText("Localizar");
+        getjButton_Confirmar().setText("Localizar");
+        getjLabel_LocalizarFiltrar().setText("(*) Localizar");
+        getjLabel_Aviso().setText("(*) Campos obrigatórios!");
+        getjCheckBox_PesquisarAbaixo().setText("Localizar Abaixo");
+        getjCheckBox_PesquisarAcima().setText("Localizar Acima");
+        
         getjCheckBox1().setText("Localizar por Nome");
         getjCheckBox2().setText("Localizar por CPF");
         getjCheckBox3().setVisible(false);
@@ -26,15 +34,15 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
     @Override
     public void AcaoJCheckBox1()
     {
-        getjFormattedTextField_Localizar().setFormatterFactory(null);
-        getjFormattedTextField_Localizar().setText(null);
+        getjFormattedTextField_LocalizarFiltrar().setFormatterFactory(null);
+        getjFormattedTextField_LocalizarFiltrar().setText(null);
     }
 
     @Override
     public void AcaoJCheckBox2()
     {
-        setjFormattedTextField_Localizar(Mascaras.Mascaras.setFormat(getjFormattedTextField_Localizar(),"###.###.###-##", '_'));
-        getjFormattedTextField_Localizar().setText(null);
+        setjFormattedTextField_LocalizarFiltrar(Mascaras.Mascaras.setFormat(getjFormattedTextField_LocalizarFiltrar(),"###.###.###-##", '_'));
+        getjFormattedTextField_LocalizarFiltrar().setText(null);
     }
 
     @Override
@@ -50,16 +58,16 @@ public class JFrame_LocalizarCliente extends JFrame_BaseLocalizar
                 coluna = 0;
             if(getjCheckBox2().isSelected())
             {
-                if(getjFormattedTextField_Localizar().getText().equals("___.___.___-__"))
+                if(getjFormattedTextField_LocalizarFiltrar().getText().equals("___.___.___-__"))
                 {
-                    getjLabel_ErroLocalizar().setText("O campo Localizar é obrigatório!");
+                    getjLabel_ErroLocalizarFiltrar().setText("O campo Localizar é obrigatório!");
                     return;
                 }
                 
                 coluna = 1;
             }
 
-            if(tabelaCliente.selecionarLinhaTabela(select, coluna, getjFormattedTextField_Localizar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
+            if(tabelaCliente.selecionarLinhaTabela(select, coluna, getjFormattedTextField_LocalizarFiltrar().getText(), getjCheckBox_PesquisarAbaixo().isSelected()))
                 dispose();
             else
                 JOptionPane.showMessageDialog(this, "Cliente não encontrado!", "Erro!", 2);
