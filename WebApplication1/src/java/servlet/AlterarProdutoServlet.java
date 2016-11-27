@@ -34,11 +34,8 @@ public class AlterarProdutoServlet extends HttpServlet
             out.println("<html>");
             out.println("<body>");
             
-            String produto = request.getParameter("valor");
-            produto = produto.replace('.', ',');
-            
             response.sendRedirect("ProdutoJSTL.jsp?cod=" + request.getParameter("codigo") + "&nome="+request.getParameter("nome")+
-                    "&valor=" + produto + "&descricao=" + request.getParameter("descricao") + 
+                    "&valor=" + request.getParameter("valor") + "&descricao=" + request.getParameter("descricao") + 
                     "&categoria=" + request.getParameter("categoria"));
             out.println("</body>");
             out.println("</html>");

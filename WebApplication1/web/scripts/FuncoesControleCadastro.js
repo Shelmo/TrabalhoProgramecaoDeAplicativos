@@ -5,9 +5,40 @@ function mascara(o, f)
     setTimeout("execmascara()", 1);
 }
 
+function mascaraTroco(o, o2, f, valor)
+{
+    v_obj = o;
+    v_obj2 = o2.valorDevolvido;
+    v_valor = valor;
+
+    v_fun = f;
+    setTimeout("execMascaraTroco()", 1);
+}
+
 function execmascara()
 {
     v_obj.value = v_fun(v_obj.value);
+}
+
+function execMascaraTroco()
+{
+    v_obj.value = v_fun(v_obj.value);
+    var str = v_obj.value;
+    str = str.replace(",", ".");
+    str = str - v_valor;
+    var str2 = str.toFixed(2).toString().replace(".", ",");
+    
+    if(str < 0)
+    {
+        str2 = str2.replace("-", "");
+        str2 = v_fun(str2);
+        str2 = "-" + str2;
+    }
+    else
+    {
+        str2 = v_fun(str2);
+    }
+    v_obj2.value = str2;
 }
 
 function cpf(v)

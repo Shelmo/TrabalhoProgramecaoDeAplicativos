@@ -28,11 +28,16 @@
                 </div>
                 <br>
                 <div class="btn-group btn-group-justified">
+                    <a href="index.jsp" class="btn btn-primary">Pedido</a>
                     <a href="ListaCategoriaJSTL.jsp" class="btn btn-primary">Categoria</a>
                     <a href="ListaProdutoJSTL.jsp" class="btn btn-primary">Produto</a>
                     <a href="ListaClienteJSTL.jsp" class="btn btn-primary">Cliente</a>
                     <a href="#" class="btn btn-primary" onClick="alert('Engenharia de Computação\n\nDisciplina: Programação para Web\n\nAcadêmico: Shelmo Lucas Baches\n')">Sobre</a>
                 </div>
+            </div>
+            
+            <div class="row">
+                <h3 align="center">Pedidos</h3><br>
             </div>
 
 
@@ -82,8 +87,9 @@
             </div>
 
             <div class="row"><br><br>
-                <div class="col-md-offset-4">
-                    <table class="table-bordered table-responsive table-striped">
+                <div class="container">
+                <div class="col-md-offset-1">
+                    <table class="table table-bordered table-responsive table-striped">
                         <thead>
                             <tr align="center">
                                 <th width = "275">Cliente</th>
@@ -96,8 +102,9 @@
                         </thead>
                         <tbody>
                             <c:if test="${param.txtFiltro == null}">
-                                <c:forEach var="p" items="<%=DAO_Generalizado.getList("from Pedido")%>">
-                                    <tr>
+<!--                            Pegar todo os pedidos abertos    -->
+                                <c:forEach var="p" items="<%=DAO_Generalizado.getList("from Pedido where situacao = 'A'")%>">
+                                    <tr class="warning">
                                         <td>${p.cliente}</td>
                                         <td><fmt:formatDate value="${p.dataCadastro}" type="both" pattern="dd/MM/yyyy" dateStyle="full"/></td>
                                         <td>${p.mesa}</td>
@@ -119,7 +126,31 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST" onsubmit="return confirm('Excluir esse Pedido?')">
+                                                <input type="hidden" name="codigo" value="${p.idPedido}">
+                                                <input type="hidden" name="nome" value="${p.cliente}">
+                                                <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                    <c:forEach var="p" items="<%=DAO_Generalizado.getList("from Pedido where situacao = 'F'")%>">
+                                    <tr class="info">
+                                        <td>${p.cliente}</td>
+                                        <td><fmt:formatDate value="${p.dataCadastro}" type="both" pattern="dd/MM/yyyy" dateStyle="full"/></td>
+                                        <td>${p.mesa}</td>
+                                        <td>
+                                            <form name="frm_addItensPedido" action="ItensPedidoJSTL.jsp" method="POST">
+                                                <input class="btn btn-primary" type="submit" value="Pedido" name="bt_addItens" disabled="disabled"/>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form name="frm_alterar" action="PedidoJSTL.jsp" method="POST">
+                                                <input class="btn btn-primary" type="submit" value="Alterar" name="bt_alterar" disabled="disabled"/>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST" onsubmit="return confirm('Excluir esse Pedido?')">
                                                 <input type="hidden" name="codigo" value="${p.idPedido}">
                                                 <input type="hidden" name="nome" value="${p.cliente}">
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -131,7 +162,7 @@
 
                             <c:if test="${param.txtFiltro != null && param.btFiltroCliente != null}">
                                 <c:forEach var="p" items="<%=DAO_Generalizado.getList(criteria.CriteriaPedidos.listarPedidos(request.getParameter("txtFiltro"), criteria.CriteriaPedidos.FILTRO_CLIENTE))%>">
-                                    <tr>
+                                    <tr class="warning">
                                         <td>${p.cliente}</td>
                                         <td><fmt:formatDate value="${p.dataCadastro}" type="both" pattern="dd/MM/yyyy" dateStyle="full"/></td>
                                         <td>${p.mesa}</td>
@@ -153,7 +184,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST" onsubmit="return confirm('Excluir esse Pedido?')">
                                                 <input type="hidden" name="codigo" value="${p.idPedido}">
                                                 <input type="hidden" name="nome" value="${p.cliente}">
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -165,7 +196,7 @@
 
                             <c:if test="${param.txtFiltro != null && param.btFiltroMesa != null}">
                                 <c:forEach var="p" items="<%=DAO_Generalizado.getList(criteria.CriteriaPedidos.listarPedidos(request.getParameter("txtFiltro"), criteria.CriteriaPedidos.FILTRO_MESA))%>">
-                                    <tr>
+                                    <tr class="warning">
                                         <td>${p.cliente}</td>
                                         <td><fmt:formatDate value="${p.dataCadastro}" type="both" pattern="dd/MM/yyyy" dateStyle="full"/></td>
                                         <td>${p.mesa}</td>
@@ -187,7 +218,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST" onsubmit="return confirm('Excluir esse Pedido?')">
                                                 <input type="hidden" name="codigo" value="${p.idPedido}">
                                                 <input type="hidden" name="nome" value="${p.cliente}">
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -199,7 +230,7 @@
 
                             <c:if test="${param.txtFiltro != null && param.btFiltroData != null}">
                                 <c:forEach var="p" items="<%=DAO_Generalizado.getList(criteria.CriteriaPedidos.listarPedidos(request.getParameter("txtFiltro"), criteria.CriteriaPedidos.FILTRO_DATA))%>">
-                                    <tr>
+                                    <tr class="warning">
                                         <td>${p.cliente}</td>
                                         <td><fmt:formatDate value="${p.dataCadastro}" type="both" pattern="dd/MM/yyyy" dateStyle="full"/></td>
                                         <td>${p.mesa}</td>
@@ -221,7 +252,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirPedidoServlet" method="POST" onsubmit="return confirm('Excluir esse Pedido?')">
                                                 <input type="hidden" name="codigo" value="${p.idPedido}">
                                                 <input type="hidden" name="nome" value="${p.cliente}">
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -232,6 +263,7 @@
                             </c:if>
                         </tbody>
                     </table>
+                </div>
                 </div>
             </div>
         </div>

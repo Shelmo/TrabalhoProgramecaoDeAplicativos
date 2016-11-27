@@ -21,7 +21,22 @@
     <body>
         <div class="container-fluid center-block">
             <div class="jumbotron">
-                <h1 align="center">Produtos</h1>
+                <div class="row">
+                    <h1 align="center">Pizzaria</h1>
+                    <h3 align="center">Programação para Web</h3>
+                </div>
+                <br>
+                <div class="btn-group btn-group-justified">
+                    <a href="index.jsp" class="btn btn-primary">Pedido</a>
+                    <a href="ListaCategoriaJSTL.jsp" class="btn btn-primary">Categoria</a>
+                    <a href="ListaProdutoJSTL.jsp" class="btn btn-primary">Produto</a>
+                    <a href="ListaClienteJSTL.jsp" class="btn btn-primary">Cliente</a>
+                    <a href="#" class="btn btn-primary" onClick="alert('Engenharia de Computação\n\nDisciplina: Programação para Web\n\nAcadêmico: Shelmo Lucas Baches\n')">Sobre</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <h3 align="center">Produtos</h3><br>
             </div>
 
             <form class="form-horizontal" name="produto" action="ListaProdutoJSTL.jsp" method="POST">
@@ -106,7 +121,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST" onsubmit="return confirm('Excluir esse Produto?')">
                                                 <input type="hidden" name="codigo" value="${p.idProduto}"/>
                                                 <input type="hidden" name="nome" value="${p.nomeProduto}"/>
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -133,7 +148,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST" onsubmit="return confirm('Excluir esse Produto?')">
                                                 <input type="hidden" name="codigo" value="${p.idProduto}"/>
                                                 <input type="hidden" name="nome" value="${p.nomeProduto}"/>
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>
@@ -161,7 +176,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST">
+                                            <form name="frm_excluir" action="ExcluirProdutoServlet" method="POST" onsubmit="return confirm('Excluir esse Produto?')">
                                                 <input type="hidden" name="codigo" value="${p.idProduto}"/>
                                                 <input type="hidden" name="nome" value="${p.nomeProduto}"/>
                                                 <input class="btn btn-primary" type="submit" value="Excluir" name="bt_excluir"/>

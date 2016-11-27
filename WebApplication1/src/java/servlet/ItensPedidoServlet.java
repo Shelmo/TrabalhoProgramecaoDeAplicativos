@@ -75,15 +75,27 @@ public class ItensPedidoServlet extends HttpServlet
                         response.sendRedirect("ItensPedidoJSTL.jsp?codigo=" + pedido.getIdPedido() + "&nome="
                                 + pedido.getCliente().getNomeCliente() + "&mesa=" + pedido.getMesa());
                         produtoExistente = true;
+                        break;
                     }
                 }
 
                 if (!produtoExistente)
                 {
-                    pedido.getListItensPedidos().add(itensPedido);
-                    DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.ATUALIZAR);
-                    response.sendRedirect("ItensPedidoJSTL.jsp?codigo=" + pedido.getIdPedido() + "&nome="
-                            + pedido.getCliente().getNomeCliente() + "&mesa=" + pedido.getMesa());
+                    if (request.getParameter("nomeIncluido") != null)
+                    {
+                        pedido.getListItensPedidos().add(itensPedido);
+                        DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.ATUALIZAR);
+                        response.sendRedirect("ItensPedidoJSTL.jsp?codigo=" + pedido.getIdPedido() + "&nome="
+                                + pedido.getCliente().getNomeCliente() + "&mesa=" + pedido.getMesa() + "&nomeIncluido="
+                                + request.getParameter("nomeIncluido"));
+                    }
+                    else
+                    {
+                        pedido.getListItensPedidos().add(itensPedido);
+                        DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.ATUALIZAR);
+                        response.sendRedirect("ItensPedidoJSTL.jsp?codigo=" + pedido.getIdPedido() + "&nome="
+                                + pedido.getCliente().getNomeCliente() + "&mesa=" + pedido.getMesa());
+                    }
                 }
             }
 

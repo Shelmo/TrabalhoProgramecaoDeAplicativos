@@ -8,6 +8,7 @@ package servlet;
 import dao.DAO_Generalizado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -78,8 +79,9 @@ public class PedidoServlet extends HttpServlet
             }
             else
             {
-                DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.SALVAR);
-                response.sendRedirect("index.jsp?nomeIncluido=" + pedido.getCliente().getNomeCliente());
+                Serializable codigo = DAO_Generalizado.incluirAlterar(pedido, DAO_Generalizado.SALVAR);
+                response.sendRedirect("ItensPedidoJSTL.jsp?nome=" + pedido.getCliente().getNomeCliente() + "&mesa=" + pedido.getMesa() + "&codigo="
+                        + codigo + "&nomeIncluido=" + pedido.getCliente().getNomeCliente());
             }
             
             out.println("</body>");

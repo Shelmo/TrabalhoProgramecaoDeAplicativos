@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Categoria"%>
 <%@page import="dao.DAO_Generalizado"%>
@@ -19,6 +20,7 @@
         <script type="text/javascript" src="scripts/FuncoesControleCadastro.js"></script>
     </head>
     <body>
+        <fmt:setLocale value="pt_BR"/>
         <form class="form-horizontal" name="produto" action="ProdutoServlet" method="POST">
 
             <c:if test="${param.cod != null}">
@@ -27,7 +29,22 @@
 
             <div class="container-fluid center-block">
                 <div class="jumbotron">
-                    <h1 align="center">Produto</h1>
+                    <div class="row">
+                        <h1 align="center">Pizzaria</h1>
+                        <h3 align="center">Programação para Web</h3>
+                    </div>
+                    <br>
+                    <div class="btn-group btn-group-justified">
+                        <a href="index.jsp" class="btn btn-primary">Pedido</a>
+                        <a href="ListaCategoriaJSTL.jsp" class="btn btn-primary">Categoria</a>
+                        <a href="ListaProdutoJSTL.jsp" class="btn btn-primary">Produto</a>
+                        <a href="ListaClienteJSTL.jsp" class="btn btn-primary">Cliente</a>
+                        <a href="#" class="btn btn-primary" onClick="alert('Engenharia de Computação\n\nDisciplina: Programação para Web\n\nAcadêmico: Shelmo Lucas Baches\n')">Sobre</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h3 align="center">Produto</h3><br>
                 </div>
 
                 <div class="row">
@@ -62,7 +79,7 @@
                             <div class="col-md-2">
                                 <label class="label label-primary">Valor</label>
                                 <c:if test="${param.valor != null}">
-                                    <input class="form-control" type="text" name="txtValor" value="${param.valor}" placeholder="R$" onkeyup="mascara(this, moeda)" required maxLength="14"/>
+                                    <input class="form-control" type="text" name="txtValor" value="<fmt:formatNumber value="${param.valor}" type="number" minFractionDigits="2"/>" placeholder="R$" onkeyup="mascara(this, moeda)" required maxLength="14"/>
                                 </c:if>
                                 <c:if test="${param.valor == null}">
                                     <input class="form-control" type="text" name="txtValor" value="" placeholder="R$" onkeyup="mascara(this, moeda)" required

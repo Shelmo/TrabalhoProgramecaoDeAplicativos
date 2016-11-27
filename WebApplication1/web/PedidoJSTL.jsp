@@ -24,7 +24,22 @@
 
             <div class="container-fluid center-block">
                 <div class="jumbotron">
-                    <h1 align="center">Pedido</h1>
+                    <div class="row">
+                        <h1 align="center">Pizzaria</h1>
+                        <h3 align="center">Programação para Web</h3>
+                    </div>
+                    <br>
+                    <div class="btn-group btn-group-justified">
+                        <a href="index.jsp" class="btn btn-primary">Pedido</a>
+                        <a href="ListaCategoriaJSTL.jsp" class="btn btn-primary">Categoria</a>
+                        <a href="ListaProdutoJSTL.jsp" class="btn btn-primary">Produto</a>
+                        <a href="ListaClienteJSTL.jsp" class="btn btn-primary">Cliente</a>
+                        <a href="#" class="btn btn-primary" onClick="alert('Engenharia de Computação\n\nDisciplina: Programação para Web\n\nAcadêmico: Shelmo Lucas Baches\n')">Sobre</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h3 align="center">Pedido</h3><br>
                 </div>
 
                 <div class="row">
@@ -58,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="form-group">
                         <div align="center">
